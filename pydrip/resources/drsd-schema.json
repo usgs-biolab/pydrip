@@ -1,0 +1,1240 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://data.usgs.gov/property_registry/",
+  "type": [
+    "array",
+    "object"
+  ],
+  "title": "Dam Removal Science Database",
+  "description": "A dataset containing information about published dam removal science.",
+  "items": {
+    "$ref": "#/definitions/items",
+    "properties": {
+          "AccessionKey":{
+            "$id": "#AccessionKey",
+            "type": "integer",
+            "title": "Accession Key",
+            "description": "sequential automatically generated number, there are some gaps due to dams and citations being removed from analysis due to being out of the study scope",
+            "examples":[
+              558
+            ]
+          },
+          "DamAccessionNumber":{
+            "$id": "#DamAccessionNumber",
+            "type": "integer",
+            "title": "Dam Accession Number",
+            "description": "a unique number assigned to each dam in database. There are some gaps due to dams and citations being removed from analysis due to being out of the study scope",
+            "examples":[
+              156
+            ]
+          },
+          "CitationAccessionNumber":{
+            "$id": "#CitationAccessionNumber",
+            "type": "integer",
+            "title": "Citation Accession Number",
+            "description": "A unique number assigned to each Citation record in the database.  There are some gaps due to dams and citations being removed from analysis due to being out of the study scope",
+            "examples":[
+              156
+            ]
+          },
+          "ResultsID":{
+            "$id": "#ResultsID",
+            "type": "integer",
+            "title": "Results Identifier",
+            "description": "Sequential automatically generated number assigned to each Results record in the database. There are some gaps due to dams and citations being removed from analysis due to being out of the study scope",
+            "examples":[
+              156
+            ]
+          },
+          "DesignID":{
+            "$id": "#DesignID",
+            "type": "integer",
+            "title": "Design Identifier",
+            "description": "Sequential automatically generated number assigned to each Design record in the database. There are some gaps due to dams and citations being removed from analysis due to being out of the study scope",
+            "examples":[
+              156
+            ]
+          },
+          "CitationID":{
+            "$id": "#CitationID",
+            "type": "string",
+            "title": "Citation Identifier",
+            "description": "File name of PDF, stored in Google Drive. Comprised of primary author, second author or etal, year of publication, and journal name/ conference name/ thesis/ book title, etc",
+            "examples": [
+                "Burroughs_2007_Thesis_Ch3"
+            ]
+          },
+          "CitationAuthor":{
+            "$id": "#CitationAuthor",
+            "type": "string",
+            "title": "Citation Author",
+            "description": "All authors of associated publication, using format last name followed by a comma and initials",
+            "examples":[
+              "Burroughs, B. A.; Hayes, D. B., Klomp, K. D., Hansen, J. F. & Mistak, J."
+            ]
+          },
+          "CitationTitle":{
+            "$id": "#CitationTitle",
+            "type": "string",
+            "title": "Citation Title",
+            "description": "Title of citation",
+            "examples": [
+                "Sampling and Modeling of Sediment Transport and Reservoir Erosion Following Dam Removal: Milltown Dam, Montana"
+            ]
+          },
+          "CitationJournalOrConferenceName":{
+            "$id": "#CitationJournalOrConferenceName",
+            "type": "string",
+            "title": "Citation Journal Or ConferenceName",
+            "default": "",
+            "description": "Name of journal or conference where citation is published",
+            "examples":[
+              "Limnology and Oceanography"
+            ]
+          },
+          "CitationYear":{
+            "$id": "#CitationYear",
+            "type": "integer",
+            "title": "Citation Year",
+            "description": "Year citation was published. Blanks indicate the publication year is unknown, in the case of unpublished reports",
+            "examples": [
+                1999
+            ]
+          },
+          "CitationVolume":{
+            "$id": "#CitationVolume",
+            "type": "string",
+            "title": "Citation Volume",
+            "default": "",
+            "description": "If citation is published in a journal, the associated volume number",
+            "examples":[
+              "38"
+            ]
+          },
+          "CitationNumber":{
+            "$id": "#CitationNumber",
+            "type": "integer",
+            "title": "Citation Number",
+            "default": "",
+            "description": "If citation is published in a journal, the associated issue number",
+            "examples":[
+              "6"
+            ]
+          },
+          "CitationPages":{
+            "$id": "#CitationPages",
+            "type": "string",
+            "title": "Citation Pages",
+            "description": "Range of page numbers in the journal or total pages in the thesis/ report",
+            "examples": [
+                "541--555"
+            ]
+          },
+          "CitationBooktitle":{
+            "$id": "#CitationBooktitle",
+            "type": "string",
+            "title": "Citation Book Title",
+            "default": "",
+            "description": "If CitationDocumentCategory is a book, the title of the book",
+            "examples":[
+              "River Basins, Reservoir Sedimentation and Water Resources"
+            ]
+          },
+          "CitationDocumentCategory":{
+            "$id": "#CitationDocumentCategory",
+            "type": "string",
+            "title": "Citation Document Category",
+            "description": "categorized type of document",
+            "examples": [
+                "Journal Article",
+                "Book Section",
+                "Conference Proceedings",
+                "USGS Peer Reviewed Report",
+                "Unpublished Report",
+                "Thesis/Dissertation",
+                "Report-Class Project",
+                "Report"
+            ]
+          },
+          "CitationEditor":{
+            "$id": "#CitationEditor",
+            "type": "string",
+            "title": "Citation Editor",
+            "default": "",
+            "description": "Editor associated with the publication. Field left blank if not applicable or available",
+            "examples":[
+              "De Graff, J V & Evans, J E"
+            ]
+          },
+          "CitationPublisher":{
+            "$id": "#CitationPublisher",
+            "type": "string",
+            "title": "Citation Publisher",
+            "description": "Publisher associated with the publication. Field left blank if not applicable or available",
+            "examples": [
+                "Springer"
+            ]
+          },
+          "CitationInstitution":{
+            "$id": "#CitationInstitution",
+            "type": "string",
+            "title": "Citation Institution",
+            "default": "",
+            "description": "The publishing agency/institution used if CitationDocumentCategory is any type of Report",
+            "examples":[
+              "South Carolina Department of Natural Resources"
+            ]
+          },
+          "CitationSchool":{
+            "$id": "#CitationSchool",
+            "type": "string",
+            "title": "Citation School",
+            "default": "",
+            "description": "If the CitationType is a Thesis/Dissertation, the school where thesis was published",
+            "examples": [
+                "Michigan State University"
+            ]
+          },
+          "CitationDOI":{
+            "$id": "#CitationDOI",
+            "type": "string",
+            "title": "Citation DOI",
+            "default": "",
+            "description": "Digital Object Identifier",
+            "examples":[
+              "10.1577/T09-056.1"
+            ]
+          },
+          "CitationURI":{
+            "$id": "#CitationURI",
+            "type": "string",
+            "title": "Citation URI",
+            "default": "",
+            "description": "Uniform Resource Identifier (URI) for the citation within the Science Base catalog",
+            "examples": [
+                "https://www.sciencebase.gov/catalog/item/55c26b8ce4b033ef521067ee"
+            ]
+          },
+          "AR_ID":{
+            "$id": "#AR_ID",
+            "type": "string",
+            "title": "AR_ID",
+            "default": "",
+            "description": "The unique alphanumeric identifier assigned to individual dams by American Rivers. This field is blank if the dam removal is not in American Rivers' database of dam removals in the USA",
+            "examples":[
+              "PA-021"
+            ]
+          },
+          "DamName":{
+            "$id": "#DamName",
+            "type": "string",
+            "title": "Dam Name",
+            "default": "",
+            "description": "A unique name given to dam. If dam has more than one name, alternate names are given in a separate field. If no name provided in text, a name was assigned by USGS with river name followed by a unique number",
+            "examples": [
+                "Stronach Dam"
+            ]
+          },
+          "DamNameAlternate":{
+            "$id": "#DamNameAlternate",
+            "type": "string",
+            "title": "Dam Alternate Names",
+            "default": "",
+            "description": "Alternate names given to the dam. If dam has more than one alternate name, the are each listed separated by a comma",
+            "examples":[
+                "Linen Mill Dam, McArthur Dam"
+            ]
+          },
+          "DamRiverName":{
+            "$id": "#DamRiverName",
+            "type": "string",
+            "title": "Dam River Name",
+            "default": "",
+            "description": "name of river where dam is located",
+            "examples": [
+                "Kennebec River"
+            ]
+          },
+          "DamRiverNameAlternate":{
+            "$id": "#DamRiverNameAlternate",
+            "type": "string",
+            "title": "Dam River Name Alternate",
+            "default": "",
+            "description": "Alternate name of river where dam is located, if multiple names were referenced",
+            "examples":[
+              "St. Joseph River"
+            ]
+          },
+          "DamLocation":{
+            "$id": "#DamLocation",
+            "type": "string",
+            "title": "Dam Location",
+            "default": "",
+            "description": "a general description of dam location. if in United States: City, County or Area and State. If outside of United States: City or Region and Country",
+            "examples": [
+                "Williamsburg, Pennsylvania"
+            ]
+          },
+          "DamState_Province":{
+            "$id": "#DamState_Province",
+            "type": "string",
+            "title": "Dam State or Province",
+            "default": "",
+            "description": "if dam location is in United States, state in which the dam is located, 2 letter standard state postal abbreviation. If located within Canada, name of province. If located outside of US or Canada, field null",
+            "examples":[
+              "PA"
+            ]
+          },
+          "DamCountry":{
+            "$id": "#DamCountry",
+            "type": "string",
+            "title": "DamCountry",
+            "default": "",
+            "description": "country of dam location",
+            "examples": [
+                "USA"
+            ]
+          },
+          "DamLatitude":{
+            "$id": "#DamLatitude",
+            "type": "number",
+            "title": "Dam Latitude",
+            "default": None,
+            "description": "Latitude in decimal degrees of dam location",
+            "examples": [
+                43.4585
+            ]
+          },
+          "DamLongitude":{
+            "$id": "#DamLongitude",
+            "type": "number",
+            "title": "Dam Longitude",
+            "default": None,
+            "description": "Longitude in decimal degrees of dam location",
+            "examples":[
+                -82.7794
+            ]
+          },
+          "DamCoordinateSource":{
+            "$id": "#DamCoordinateSource",
+            "type": "string",
+            "title": "Dam Coordinate Source",
+            "default": "",
+            "description": "source of latitude and longitude",
+            "examples": [
+                "google",
+                "publication",
+                "USACE NID",
+                "American Rivers database"
+            ]
+          },
+          "DamMapDatum":{
+            "$id": "#DamMapDatum",
+            "type": "string",
+            "title": "Dam Map Datum",
+            "default": "",
+            "description": "coordinate system used for associated Latitude and Longitude of dam location",
+            "examples":[
+              "WGS84"
+            ]
+          },
+          "DamAccuracyOfLocation":{
+            "$id": "#DamAccuracyOfLocation",
+            "type": "string",
+            "title": "Dam Accuracy Of Location",
+            "default": "",
+            "description": "confidence in spacial accuracy of dam latitude and longitude. Field used only when location found in google maps and not reported by publication or USACE NID",
+            "examples": [
+                "location confirmed"
+            ]
+          },
+          "DamYearBuiltOriginalStructure":{
+            "$id": "#DamYearBuiltOriginalStructure",
+            "type": "integer",
+            "title": "Dam Year Built Original Structure",
+            "default": None,
+            "description": "the year a previous dam was built in or near location of dam that was removed during study. If a decade is reported (ex: 1880's), the database will report the median year in that decade (ex: 1885).",
+            "examples":[
+                1638
+            ]
+          },
+          "DamYearBuiltRemovedStructure":{
+            "$id": "#DamYearBuiltRemovedStructure",
+            "type": "integer",
+            "title": "Dam Year Built Removed Structure",
+            "default": None,
+            "description": "the year the dam was built that was removed during study. If a decade is reported (ex: 1880's), the database will report the median year in that decade (ex: 1885)",
+            "examples": [
+                1912
+            ]
+          },
+          "DamMonthRemovalBegan":{
+            "$id": "#DamMonthRemovalBegan",
+            "type": "integer",
+            "title": "Month Dam Removal Began",
+            "default": None,
+            "description": "the month dam removal began. Season data: If a removal is reported as a season (Winter, Spring, Summer and Fall), the following month is selected and the season reported is documented in the notes (Winter = December, Spring = April, Summer = July, Fall = October)",
+            "examples":[
+                8
+            ]
+          },
+          "DamDayRemovalBegan":{
+            "$id": "#DamDayRemovalBegan",
+            "type": "integer",
+            "title": "Day Dam Removal Began",
+            "default": None,
+            "description": "the day within the month that dam removal began",
+            "examples": [
+                27
+            ]
+          },
+          "DamYearRemovalBegan":{
+            "$id": "#DamYearRemovalBegan",
+            "type": "integer",
+            "title": "Year Dam Removal Began",
+            "default": None,
+            "description": "the year dam removal began",
+            "examples": [
+                1985
+            ]
+          },
+          "DamMonthRemovalFinished":{
+            "$id": "#DamMonthRemovalFinished",
+            "type": "integer",
+            "title": "Month Dam Removal Finished",
+            "default": None,
+            "description": "the month dam removal finished. Season data: If a removal is reported as a season (Winter, Spring, Summer and Fall), the following month is selected and the season reported is documented in the notes (Winter = December, Spring = April, Summer = July, Fall = October)",
+            "examples":[
+                9
+            ]
+          },
+          "DamDayRemovalFinished":{
+            "$id": "#DamDayRemovalFinished",
+            "type": "integer",
+            "title": "Day Dam Removal Finished",
+            "default": None,
+            "description": "the day within the month that dam removal finished",
+            "examples": [
+                1
+            ]
+          },
+          "DamYearRemovalFinished":{
+            "$id": "#DamYearRemovalFinished",
+            "type": "integer",
+            "title": "Year Dam Removal Finished",
+            "default": None,
+            "description": "the year dam removal finished. If publication reports only one date/year for removal, the year is placed in DamYearRemovalFinished",
+            "examples":[
+              "2011"
+            ]
+          },
+          "DamNumberOfDaysToRemoveDam":{
+            "$id": "#DamNumberOfDaysToRemoveDam",
+            "type": "integer",
+            "title": "Number Of Days To Remove Dam",
+            "default": None,
+            "description": "a calculated number of days from start to end of removal. Calculated by USGS using removal start and end dates, if both provided",
+            "examples": [
+                "291"
+            ]
+          },
+          "DamRemovalMethod":{
+            "$id": "#DamRemovalMethod",
+            "type": "string",
+            "title": "Dam Removal Method",
+            "default": "",
+            "description": "categorized method of removal based on description in publication. Field left blank if unknown",
+            "examples":[
+                "de-water & dig",
+                "accidental",
+                "staged removal",
+                "instantaneous",
+                "partial"
+            ]
+          },
+          "DamMotivationForRemoval":{
+            "$id": "#DamMotivationForRemoval",
+            "type": "string",
+            "title": "Motivation For Dam Removal",
+            "default": "",
+            "description": "categorized motivation of removal based on description in publication. Field left blank if unknown",
+            "examples":[
+              "dam failure",
+              "environmental",
+              "hazard",
+              "economic",
+              "multiple"
+          ]
+        },
+        "DamFunction":{
+          "$id": "#DamFunction",
+          "type": "string",
+          "title": "Dam Function",
+          "default": "",
+          "description": "categorized dam function based on publication. If not specified in publication, USACE NID category was used. Field left blank if unknown",
+          "examples":[
+              "flood control",
+              "hydroelectric",
+              "irrigation",
+              "recreation",
+              "water supply"
+          ]
+        },
+        "DamOperation":{
+          "$id": "#DamOperation",
+          "type": "string",
+          "title": "Dam Operation",
+          "default": "",
+          "description": "categorized operation of dam based on publication",
+          "examples": [
+              "run-of-the-river",
+              "storage"
+          ]
+        },
+        "DamOwner":{
+          "$id": "#DamOwner",
+          "type": "string",
+          "title": "Dam Owner",
+          "default": "",
+          "description": "name of company or person that owned the dam",
+          "examples": [
+              "Reedsville Mill"
+          ]
+        },
+        "DamHeight_m":{
+          "$id": "#DamHeight_m",
+          "type": "number",
+          "title": "Dam Height in Meters",
+          "default": None,
+          "description": "height of dam, measured in meters",
+          "examples":[
+              8.5
+          ]
+        },
+        "DamWidth_m":{
+          "$id": "#DamWidth_m",
+          "type": "number",
+          "title": "Dam Width in Meters",
+          "default": None,
+          "description": "distance along the top of the dam, measured in meters",
+          "examples": [
+              204
+          ]
+        },
+        "DamReservoirVolume_m3":{
+          "$id": "#DamReservoirVolume_m3",
+          "type": "number",
+          "title": "Dam Reservoir Volume in Cubic Meters",
+          "default": None,
+          "description": "total storage space in reservoir, measured in cubic meters",
+          "examples":[
+             207220
+          ]
+        },
+        "DamReservoirSurfaceArea_km2":{
+          "$id": "#DamReservoirSurfaceArea_km2",
+          "type": "number",
+          "title": "Dam Reservoir Surface Area in Kilometers",
+          "default": None,
+          "description": "surface area, in square kilometers, of the impoundment",
+          "examples": [
+              "4.28"
+          ]
+        },
+        "DamLengthOfReservoir_m":{
+          "$id": "#DamLengthOfReservoir_m",
+          "type": "number",
+          "title": "Length Of Reservoir in Meters",
+          "default": None,
+          "description": "length of reservoir from dam structure to end of pool, measured in meters",
+          "examples":[
+              1500
+          ]
+        },
+        "DamUpstreamDrainageArea_km2":{
+          "$id": "#DamUpstreamDrainageArea_km2",
+          "type": "number",
+          "title": "Dam Upstream Drainage Area in Kilometers",
+          "default": None,
+          "description": "Area of upstream drainage associated with river and dam, measured in square kilometers",
+          "examples": [
+              24043
+          ]
+        },
+        "DataSource_UpstreamDrainageArea":{
+          "$id": "#DataSource_UpstreamDrainageArea",
+          "type": "string",
+          "title": "Data Source Upstream Drainage Area",
+          "default": "",
+          "description": "source and associated data for DamUpstreamDrainageArea_km2. When more than one value is reported, value and source separated by comma",
+          "examples": [
+              "citation #7"
+          ]
+        },
+        "DamAreaOfEntireWatershed_km2":{
+          "$id": "#DamAreaOfEntireWatershed_km2",
+          "type": "number",
+          "title": "Area of Entire Watershed of Dam in Square Kilometers",
+          "default": None,
+          "description": "area of watershed associated with river and dam, measured in square kilometers",
+          "examples":[
+              14499
+          ]
+        },
+        "DataSource_WatershedArea":{
+          "$id": "#DataSource_WatershedArea",
+          "type": "string",
+          "title": "Data Source Watershed Area",
+          "default": "",
+          "description": "source and associated data for DamAreaOfEntireWatershed_km2. When more than one value was reported, value and source separated by comma",
+          "examples": [
+              "citation"
+          ]
+        },
+        "DamRiverWidthUpstreamOfImpoundment_m":{
+          "$id": "#DamRiverWidthUpstreamOfImpoundment_m",
+          "type": "number",
+          "title": "River Width Upstream Of Impoundment in Meters",
+          "default": None,
+          "description": "width of river, upstream of reservoir, measured in meters",
+          "examples":[
+             27
+          ]
+        },
+        "DamStrahlerStreamOrder":{
+          "$id": "#DamStrahlerStreamOrder",
+          "type": "integer",
+          "title": "Strahler Stream Order at Dam",
+          "default": None,
+          "description": "Strahler stream order (1-6) of river being impounded by dam",
+          "examples": [
+              1
+          ]
+        },
+        "DamStoredReservoirSedimentVolume_m3":{
+          "$id": "#DamStoredReservoirSedimentVolume_m3",
+          "type": "number",
+          "title": "Dam Stored Reservoir Sediment Volume in Cubic Meters",
+          "default": None,
+          "description": "volume of sediment being impounded by dam, measured in cubic meters",
+          "examples":[
+              300
+          ]
+        },
+        "DamRiverAnnualSedimentDischarge":{
+          "$id": "#DamRiverAnnualSedimentDischarge",
+          "type": "string",
+          "title": "Dam River Annual Sediment Discharge",
+          "default": "",
+          "description": "annual sediment discharge of river above dam, various units (units specified within each record)",
+          "examples": [
+              "76500 m3"
+          ]
+        },
+        "DamLengthOfStoredSedimentUpstreamOfDam_m":{
+          "$id": "#DamLengthOfStoredSedimentUpstreamOfDam_m",
+          "type": "number",
+          "title": "Length of Stored Sediment Upstream of Dam in Meters",
+          "default": None,
+          "description": "length of reservoir from dam structure to end of pool, measured in meters",
+          "examples":[
+              1500
+          ]
+        },
+        "DamNIDID":{
+          "$id": "#DamNIDID",
+          "type": "string",
+          "title": "National Inventory of Dams Identifier",
+          "default": "",
+          "description": "unique number combined with state abbreviation, assigned by USACE NID (U.S. Army Corps of Engineers, National Inventory of Dams)",
+          "examples": [
+              "MT00222"
+
+          ]
+        },
+        "DamRiverMeanDischarge_CMS":{
+          "$id": "#DamRiverMeanDischarge_CMS",
+          "type": "number",
+          "title": "Dam River Mean Discharge CMS",
+          "default": None,
+          "description": "mean discharge of river being impounded by dam, upstream from impoundment, measured in cubic meters per second",
+          "examples": [
+              4.19
+          ]
+        },
+        "DamAssociatedUSGSStreamGaugingStation":{
+          "$id": "#DamAssociatedUSGSStreamGaugingStation",
+          "type": "string",
+          "title": "Dam Associated USGS Stream Gauging Station",
+          "default": "",
+          "description": "ID number of USGS or Canada Water Office river gauging station. Derived from citation or USGS website if gauging station location was close to dam location",
+          "examples":[
+              "02GC006"
+          ]
+        },
+        "DamGaugingStationDataYears":{
+          "$id": "#DamGaugingStationDataYears",
+          "type": "string",
+          "title": "Dam Gauging Station Data Years",
+          "default": "",
+          "description": "range of years used to calculate DamRiverMeanDischarge_CMS if USGS Stream Gauging Station data used",
+          "examples": [
+              "1956-2013"
+          ]
+        },
+        "DamWebsite1":{
+          "$id": "#DamWebsite1",
+          "type": "string",
+          "title": "Dam Website 1",
+          "default": "",
+          "description": "website used to gather additional dam data not found in publications",
+          "examples":[
+             "http://wateroffice.ec.gc.ca/"
+          ]
+        },
+        "DamWebsite2":{
+          "$id": "#DamWebsite2",
+          "type": "string",
+          "title": "Dam Website 2",
+          "default": "",
+          "description": "website used to gather additional dam data not found in publications",
+          "examples": [
+              "http://www.ansp.org/research/environmental-research/projects/manatawny/"
+          ]
+        },
+        "DamWebsite3":{
+          "$id": "#DamWebsite3",
+          "type": "string",
+          "title": "Dam Website 3",
+          "default": "",
+          "description": "website used to gather additional dam data not found in publications",
+          "examples":[
+              "http://spacing.ca/toronto/2012/12/11/lost-villages-huttonville/"
+          ]
+        },
+        "DamNotes":{
+          "$id": "#DamNotes",
+          "type": "string",
+          "title": "Dam Notes",
+          "default": "",
+          "description": "notes relating to any field name beginning with Dam. May include information on how values were determined.",
+          "examples":[
+              "Year built reported as 1970's"
+          ]
+        },
+        "DesignTypeOfStudy":{
+          "$id": "#DesignTypeOfStudy",
+          "type": "string",
+          "title": "Design Type Of Study",
+          "default": "",
+          "description": "categorized study type based on description in publication",
+          "examples": [
+              "Case Study"
+          ]
+        },
+        "DesignNumOfDamsRemoved":{
+          "$id": "#DesignNumOfDamsRemoved",
+          "type": "integer",
+          "title": "Design Number of Dams Removed",
+          "default": None,
+          "description": "the total number of dams removals in study",
+          "examples":[
+             8
+          ]
+        },
+        "DesignPRERemovalMonitoringDuration":{
+          "$id": "#DesignPRERemovalMonitoringDuration",
+          "type": "integer",
+          "title": "Design PreRemoval Monitoring Duration",
+          "default": None,
+          "description": "the total number of years dam was studied before removal",
+          "examples":[
+             2
+          ]
+        },
+        "DesignPRERemovalNumberSamplingYears":{
+          "$id": "#DesignPRERemovalNumberSamplingYears",
+          "type": "integer",
+          "title": "Design PreRemoval Number Sampling Years",
+          "default": None,
+          "description": "the number of years data was collected before removal",
+          "examples":[
+             25
+          ]
+        },
+        "DesignDURINGRemovalMonitoringDuration":{
+          "$id": "#DesignDURINGRemovalMonitoringDuration",
+          "type": "integer",
+          "title": "Design During Removal Monitoring Duration",
+          "default": None,
+          "description": "the total number of years dam was studied during removal",
+          "examples":[
+             7
+          ]
+        },
+        "DesignDURINGRemovalNumberSamplingYears":{
+          "$id": "#DesignDURINGRemovalNumberSamplingYears",
+          "type": "integer",
+          "title": "Design During Removal Number Sampling Years",
+          "default": None,
+          "description": "the number of years data was collected during removal",
+          "examples":[
+             1
+          ]
+        },
+        "DesignPOSTRemovalMonitoringDuration":{
+          "$id": "#DesignPOSTRemovalMonitoringDuration",
+          "type": "integer",
+          "title": "Design Post Removal Monitoring Duration",
+          "default": None,
+          "description": "the total number of years dam was studied after removal",
+          "examples":[
+             1
+          ]
+        },
+        "DesignPOSTRemovalNumberSamplingYears":{
+          "$id": "#DesignPOSTRemovalNumberSamplingYears",
+          "type": "integer",
+          "title": "Design Post Removal Number Sampling Years",
+          "default": None,
+          "description": "the number of years data was collected after removal",
+          "examples":[
+             11
+          ]
+        },
+        "DesignWithinBasinReferenceSitesPresence":{
+          "$id": "#DesignWithinBasinReferenceSitesPresence",
+          "type": "integer",
+          "title": "Design Within Basin Reference Sites Presence",
+          "default": None,
+          "description": "presence or absence of reference or control sites within the basin where the dam was removed",
+          "examples":[
+             0
+          ]
+        },
+        "DesignOut-of-BasinReferenceSitesPresence":{
+          "$id": "#DesignOut-of-BasinReferenceSitesPresence",
+          "type": "integer",
+          "title": "Design Out-of-Basin Reference Sites Presence",
+          "default": None,
+          "description": "presence or absence of reference or control sites outside of the basin where the dam was removed",
+          "examples":[
+             0
+          ]
+        },
+        "DesignDownstreamImpactSitesPresence":{
+          "$id": "#DesignDownstreamImpactSitesPresence",
+          "type": "integer",
+          "title": "Design Downstream Impact Sites Presence",
+          "default": None,
+          "description": "presence or absence of impact sites downstream of the dam removal",
+          "examples":[
+             1
+          ]
+        },
+        "DesignWithinImpoundmentImpactSitesPresence":{
+          "$id": "#DesignWithinImpoundmentImpactSitesPresence",
+          "type": "integer",
+          "title": "Design Within Impoundment Impact Sites Presence",
+          "default": None,
+          "description": "presence or absence of impact sites within the former impoundment",
+          "examples":[
+             0
+          ]
+        },
+        "DesignNotes":{
+          "$id": "#DesignNotes",
+          "type": "string",
+          "title": "Design Notes",
+          "default": "",
+          "description": "notes relating to any field name beginning with Design. May include information on how values were determined or more details about the study design.",
+          "examples":[
+              "collected samples 5x."
+          ]
+        },
+        "ResultsCitationID":{
+          "$id": "#ResultsCitationID",
+          "type": "string",
+          "title": "Results Citation ID",
+          "default": "",
+          "description": "File name of PDF, stored in Google Drive. Comprised of primary author, second author or etal, year of publication, and journal name/ conference name/ thesis/ book title, etc",
+          "examples":[
+              ""
+          ]
+        },
+        "ResultsDataQuality":{
+          "$id": "#ResultsDataQuality",
+          "type": "string",
+          "title": "Results Data Quality",
+          "default": "",
+          "description": "categorized scale describing data extractability",
+          "examples":[
+              "A - good extractable",
+              "B - maybe extractable",
+              "C - contact author"
+          ]
+        },
+        "ResultsPrimaryFocusOfStudy":{
+          "$id": "#ResultsPrimaryFocusOfStudy",
+          "type": "string",
+          "title": "Results Primary Focus of Study",
+          "default": "",
+          "description": "categorized primary focus of the study",
+          "examples":[
+              "Abiotic",
+              "Biotic",
+              "Abiotic, Biotic"
+          ]
+        },
+        "ResultsGradient":{
+          "$id": "#ResultsGradient",
+          "type": "boolean",
+          "title": "Results Gradient",
+          "description": "Binary response if gradient was studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsTotalSedimentFlux":{
+          "$id": "#ResultsTotalSedimentFlux",
+          "type": "boolean",
+          "title": "Results Total Sediment Flux",
+          "description": "Binary response if total sediment flux was studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsSedimentBudget":{
+          "$id": "#ResultsSedimentBudget",
+          "type": "boolean",
+          "title": "Results Sediment Budget",
+          "description": "Binary response if sediment budget was studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsLongitudinalProfiles":{
+          "$id": "#ResultsLongitudinalProfiles",
+          "type": "boolean",
+          "title": "Results Longitudinal Profiles",
+          "description": "Binary response if logitudinal profiles were studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsLateralProfiles":{
+          "$id": "#ResultsLateralProfiles",
+          "type": "boolean",
+          "title": "Results Lateral Profiles",
+          "description": "Binary response if lateral profiles were studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsDischarge":{
+          "$id": "#ResultsDischarge",
+          "type": "boolean",
+          "title": "Results Discharge",
+          "description": "Binary response if discharge was studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsChannelHydraulics":{
+          "$id": "#ResultsChannelHydraulics",
+          "type": "boolean",
+          "title": "Results Channel Hydraulics",
+          "description": "Binary response if channel hydraulics was studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsGrainSizeDistributions":{
+          "$id": "#ResultsGrainSizeDistributions",
+          "type": "boolean",
+          "title": "Results Grain Size Distributions",
+          "description": "Binary response if grain size distributions were studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsBedload":{
+          "$id": "#ResultsBedload",
+          "type": "boolean",
+          "title": "Results Bedload",
+          "description": "Binary response if bedload was studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsKnickpointHeadcutMigration":{
+          "$id": "#ResultsKnickpointHeadcutMigration",
+          "type": "boolean",
+          "title": "Results Knickpoint Headcut Migration",
+          "description": "Binary response if knickpoint headcut migration was studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsReservoirSedimentErosion":{
+          "$id": "#ResultsReservoirSedimentErosion",
+          "type": "boolean",
+          "title": "Results Reservoir Sediment Erosion",
+          "description": "Binary response if reservoir sediment erosion was studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsWaterTableGroundwater":{
+          "$id": "#ResultsWaterTableGroundwater",
+          "type": "boolean",
+          "title": "Results Water Table Groundwater",
+          "description": "Binary response if water table/groundwater was studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsWaterTurbidity":{
+          "$id": "#ResultsWaterTurbidity",
+          "type": "boolean",
+          "title": "Results Water Turbidity",
+          "description": "Binary response if water turbidity was studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsSuspendedSediment":{
+          "$id": "#ResultsSuspendedSediment",
+          "type": "boolean",
+          "title": "Results Suspended Sediment",
+          "description": "Binary response if suspended sediment was studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsNutrientConcentrations":{
+          "$id": "#ResultsNutrientConcentrations",
+          "type": "boolean",
+          "title": "Results Nutrient Concentrations",
+          "description": "Binary response if nutrient concentrations were studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsWaterTemperature":{
+          "$id": "#ResultsWaterTemperature",
+          "type": "boolean",
+          "title": "Results Water Temperature",
+          "description": "Binary response if water temperature was studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsDissolvedOxygen":{
+          "$id": "#ResultsDissolvedOxygen",
+          "type": "boolean",
+          "title": "Results Dissolved Oxygen",
+          "description": "Binary response if dissolved oxygen was studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsContaminants":{
+          "$id": "#ResultsContaminants",
+          "type": "boolean",
+          "title": "Results Contaminants",
+          "description": "Binary response if contaminants were studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsLidarAerialPhotosDEM":{
+          "$id": "#ResultsLidarAerialPhotosDEM",
+          "type": "boolean",
+          "title": "Results Lidar Aerial Photos DEM",
+          "description": "Binary response if Lidar, Aerial Photos or DEMs (Digital Elevation Models) were studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsFishAbundanceCommunityStructure":{
+          "$id": "#ResultsFishAbundanceCommunityStructure",
+          "type": "boolean",
+          "title": "Results Fish Abundance Community Structure",
+          "description": "Binary response if fish abundance or community structure was studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsFishPassage":{
+          "$id": "#ResultsFishPassage",
+          "type": "boolean",
+          "title": "Results Fish Passage",
+          "description": "Binary response if fish passage was studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsAquaticInvertebrates":{
+          "$id": "#ResultsAquaticInvertebrates",
+          "type": "boolean",
+          "title": "Results Aquatic Invertebrates",
+          "description": "Binary response if aquatic invertebrates were studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsBiofilm":{
+          "$id": "#ResultsBiofilm",
+          "type": "boolean",
+          "title": "Results Biofilm",
+          "description": "Binary response if biofilm was studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsDetritus":{
+          "$id": "#ResultsDetritus",
+          "type": "boolean",
+          "title": "Results Detritus",
+          "description": "Binary response if detritus was studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsStreamMetabolism":{
+          "$id": "#ResultsStreamMetabolism",
+          "type": "boolean",
+          "title": "Results Stream Metabolism",
+          "description": "Binary response if stream metabolism was studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsNutrientUptakeCycling":{
+          "$id": "#ResultsNutrientUptakeCycling",
+          "type": "boolean",
+          "title": "Results Nutrient Uptake Cycling",
+          "description": "Binary response if nutrient uptake cycling was studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsRiparianVegetation":{
+          "$id": "#ResultsRiparianVegetation",
+          "type": "boolean",
+          "title": "Results Riparian Vegetation",
+          "description": "Binary response if riparian vegetation was studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsBirds":{
+          "$id": "#ResultsBirds",
+          "type": "boolean",
+          "title": "Results Birds",
+          "description": "Binary response if birds were studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsInvasiveSpecies":{
+          "$id": "#ResultsInvasiveSpecies",
+          "type": "boolean",
+          "title": "Results Invasive Species",
+          "description": "Binary response if invasive species were studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsFreshwaterMussels":{
+          "$id": "#ResultsFreshwaterMussels",
+          "type": "boolean",
+          "title": "Results Freshwater Mussels",
+          "description": "Binary response if freshwater mussels were studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsMarineEstuarineImpacts":{
+          "$id": "#ResultsMarineEstuarineImpacts",
+          "type": "boolean",
+          "title": "Results Marine Estuarine Impacts",
+          "description": "Binary response if marine estuarine impacts were studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsSpeciesRichnessDiversity":{
+          "$id": "#ResultsSpeciesRichnessDiversity",
+          "type": "boolean",
+          "title": "Results Species Richness Diversity",
+          "description": "Binary response if species richness diversity was studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsFoodWebs":{
+          "$id": "#ResultsFoodWebs",
+          "type": "boolean",
+          "title": "Results Food Webs",
+          "description": "Binary response if food webs were studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsWetland":{
+          "$id": "#ResultsWetland",
+          "type": "boolean",
+          "title": "Results Wetland",
+          "description": "Binary response if wetlands were studied in citation, 0=Not Studied, 1=Studied",
+          "examples":[
+              0,
+              1
+          ]
+        },
+        "ResultsNotes":{
+          "$id": "#ResultsNotes",
+          "type": "string",
+          "title": "Results Notes",
+          "description": "Notes relating to any field name beginning with Results. May include information on how values were determined.",
+          "examples":[
+              "fish assemblage, spatial and temporal changes in fish community"
+          ]
+        }
+      }
+  }
+}
