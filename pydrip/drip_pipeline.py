@@ -1,5 +1,5 @@
 import pandas as pd 
-import geopandas as gpd
+#import geopandas as gpd
 from pydrip import drip_dam
 from pydrip import drip_sources
 
@@ -45,7 +45,7 @@ def build_drip_dams_table(dam_removal_science_df, american_rivers_df):
     #dams_gdf.crs = {'init':'epsg:4326'}     
 
     #export as csv
-    #all_spatial_dam_df.to_csv('drip_dams.csv', sep=',', index=False)
+    all_spatial_dam_df.to_csv('drip_dams.csv', sep=',', index=False)
 
     return all_dam_info
 
