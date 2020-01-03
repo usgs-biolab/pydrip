@@ -1,3 +1,13 @@
-requests
-re
-sciencebasepy
+# This file may be used to create an environment using:
+# $ conda create --name <env> --file <this file>
+# platform: linux-64
+numpy=1.17.4=py37hc1035e2_0
+numpy-base=1.17.4=py37hde5b4d6_0
+pandas=0.25.3=py37he6710b0_0
+pip=19.3.1=py37_0
+python=3.7.5=h0371630_0
+requests=2.22.0=py37_1
+sciencebasepy=1.6.6=pypi_0
+setuptools=42.0.2=py37_0
+shapely=1.6.4=py37hc5e8c75_0
+wheel=0.33.6=py37_0
