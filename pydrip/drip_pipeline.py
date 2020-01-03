@@ -54,12 +54,8 @@ def main():
     #Get american rivers and dam removal science data into dataframes
     american_rivers_df, dam_removal_science_df = get_data()
 
-    #Subset dam removal science to only dam data
-    dam_science_df = drip_sources.get_science_subset(dam_removal_science_df, target='Dam')
-
     #Build JSON Representation of Drip Dams
     drip_dams = build_drip_dams_table(dam_removal_science_df, american_rivers_df)
-
 
 
 if __name__ == "__main__":
