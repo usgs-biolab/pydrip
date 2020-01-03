@@ -6,13 +6,15 @@ The Dam Removal Information Portal (DRIP) is a location where partners, scientis
 ## Description
 
 
-This package handles getting the source data for DRIP which comes from two sources.  The Dam Removal Science Database is distributed by USGS in ScienceBase (https://doi.org/10.5066/P9IGEC9G) and a complete list of dam removals is distributed by American Rivers in Figshare. We provide it as a package in order to support full transparency on what we are doing with the data and to serve as a building block for anyone else that may want to do something similar.
+This package handles retrieval and preperation of the source data for DRIP.  Source data come from two sources.  The Dam Removal Science Database is distributed by USGS in ScienceBase (https://doi.org/10.5066/P9IGEC9G) and a complete list of dam removals is distributed by American Rivers in Figshare. We provide these efforts as a package in order to support full transparency on what we are doing with the data, to allow us to more easily update DRIP and to serve as a building block for anyone else that may want to do something similar.
 
-The core drip module contains functions that process source data. Both sources are originally CSV files. In this case no transformations to the data are required.
+### Modules
 
-The core functions of the package include the following:
+drip_sources.py : The drip_sources module contains functions that retrieve and format source data. Both sources are originally CSV files. 
 
-* 
+drip_dam.py : The drip_dam module contains a Class Dam, allowing us to easily build an object to store information about any one given dam.  In some cases dams are in both datasets (linked by field AR_ID).  When this is the case we take information from the Dam Removal Science Database first, and fill in missing data with the American Rivers database.
+
+drip_pipeline.py : The drip_pipeline module documents the overall pipeline that uses the other modules to retrieve and process data so that it is ready for use in DRIP.
 
 
 
@@ -20,6 +22,7 @@ The core functions of the package include the following:
 
 
 The package uses some basic Python tools in Python 3.x and above along with the following specific dependencies:
+
 
 
 
