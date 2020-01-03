@@ -1,4 +1,4 @@
-# pyusnvc package
+# pydrip package
 
 import pkg_resources
 
