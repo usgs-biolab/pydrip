@@ -155,8 +155,14 @@ class Dam:
         self.dam_built_year = dam_data.Year_Built
         self.dam_removed_year = dam_data.Year_Removed
         self.dam_height_ft = dam_data.Dam_Height_ft
-        self.dam_name = dam_data.Dam_Name
         self.stream_name = dam_data.River
+
+        if '(' in dam_data.Dam_Name and ')' in dam_data.Dam_Name:
+            ar_dam_name, ar_alt_dam_name = clean_name(dam_data.Dam_Name) 
+            self.dam_name = ar_dam_name
+            self.dam_alt_name = ar_alt_dam_name
+        else:
+            self.dam_name = dam_data.Dam_Name
     
     def add_geometry(self):
         if self.longitude is not None and self.latitude is not None:
