@@ -4,7 +4,7 @@ import pkg_resources
 
 from . import drip_sources
 from . import drip_dam
-from . import drip_pipeline
+#from . import drip_pipeline
 
 #__version__ = pkg_resources.require("pydrip")[0].version
 
