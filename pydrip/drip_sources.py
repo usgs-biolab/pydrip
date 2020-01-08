@@ -3,20 +3,31 @@ import re
 from sciencebasepy import SbSession
 import pandas as pd
 import io
+import numpy as np
 
 sb = SbSession()
 
 
 """
-This module uses ScienceBase and Figshare APIs to retrieve most current versions of source data.
+Description
+-----------
+This module uses ScienceBase and Figshare APIs to retrieve most current versions of source data for 
+the Dam Removal Information Portal (DRIP).  Source datasets include the USGS Dam Removal Science
+Database and the American Rivers Dam Removal Database.  Functions in this module also allow for
+subsetting of source data.
 """
 
 def get_science_data_url(doi_meta = 'https://api.datacite.org/works/10.5066/P9IGEC9G'):
     """
-    Checks DOI for new versions of the Dam Removal Science Database.  If data has changed, extract most recent version.
+    Description
+    -----------
+    Checks DOI for newest version of the Dam Removal Science Database.  
+    Returns download url for most recent version of databases as CSV.
  
-    :param version: Which numbered version of the USNVC source to retrieve
-    :param force: Set to True to force cache of ScienceBase source info regardless of pre-existence
+    Parameters
+    -----------
+    version: Which numbered version of the USNVC source to retrieve
+    force: Set to True to force cache of ScienceBase source info regardless of pre-existence
     """
     
     #get doi metadata
@@ -32,7 +43,7 @@ def get_science_data_url(doi_meta = 'https://api.datacite.org/works/10.5066/P9IG
 
     files = sb.get_item_file_info(item)
     for file in files:
-        if re.search("^USGS_Dam_Removal_Science_Database_v.*csv$", file['name']):
+        if re.search("^USGS_Dam_Removal_Database_v.*csv$", file['name']):
             file_url = file['url']
             break
     
@@ -76,7 +87,7 @@ def get_science_subset(science_df, target='Dam'):
     Parameters
     ------------
     df: df, returned dataframe from read_science_data.  This is the full dam removal science dataset.
-    target: str, options include 'Citation', 'Dam', 'Design', 'Results'  
+    target: str, options include 'Citation', 'Dam', 'Design', 'Results', 'Accession'  
     '''
 
     if target == 'Dam':
@@ -86,15 +97,46 @@ def get_science_subset(science_df, target='Dam'):
         dam_data = dam_data_all.drop_duplicates()
         return dam_data
 
-    elif target in ['Citation', 'Design', 'Results']:
-        target_data_all = science_df[science_df.columns[science_df.columns.str.contains(target)]]
-        target_data = target_data_all.drop_duplicates()
-        return target_data
+    elif target == 'Accession':
+        #Select fields that contain accession keys
+        accession_data_all = science_df[science_df.columns[science_df.columns.str.contains('Accession')|science_df.columns.str.contains('ResultsID')|science_df.columns.str.contains('DesignID')]]
+        accession_data = accession_data_all.drop_duplicates()
+        return accession_data
+
+    elif target == 'Results':
+        #Select fields that contain accession keys
+        results_data_all = science_df[science_df.columns[science_df.columns.str.contains('Results')|science_df.columns.str.contains('CitationAccessionNumber')]]
+        results_data = results_data_all.drop_duplicates()
+        return results_data
+
+    elif target == 'Citation':
+        #need to include damaccessionnumber so we can create citations per dam
+        citation_data_all = science_df[science_df.columns[science_df.columns.str.contains('Citation')]]
+        citation_data = citation_data_all.drop_duplicates()
+        return citation_data
+
+    elif target == 'DamCitations':
+        #need to include damaccessionnumber so we can create citations per dam
+        dam_citation_data_all = science_df[science_df.columns[science_df.columns.str.contains('Citation')|science_df.columns.str.contains('DamAccessionNumber')]]
+        dam_citation_data = dam_citation_data_all.drop_duplicates()
+        relevant = []
+        for citation in dam_citation_data.itertuples():
+            dam = citation.DamAccessionNumber
+            doi = f'https://doi.org/{citation.CitationDOI}'
+            if ~np.isnan(citation.CitationYear):
+                citation = f'{citation.CitationAuthor}, {str(int(citation.CitationYear))}, {citation.CitationTitle}'
+            else:
+                citation = f'{citation.CitationAuthor}, {citation.CitationTitle}'
+            relevant.append({'DamAccessionNumber':dam, 'CitationDOI': doi, 'Citation':citation})
+            relevant_dam_citation_data = pd.DataFrame(relevant)
+        return relevant_dam_citation_data
+
+    elif target in ['Design']:
+        design_data_all = science_df[science_df.columns[science_df.columns.str.contains(target)]]
+        design_data = design_data_all.drop_duplicates()
+        return design_data
 
 def get_ar_only_dams(american_rivers_df, dam_science_df):
     ar_in_science = dam_science_df['AR_ID'].dropna().to_list()
     ar_only_dams = american_rivers_df[~american_rivers_df['AR_ID'].isin(ar_in_science)]
     return ar_only_dams
-
-def get_dam_data():
-    pass
