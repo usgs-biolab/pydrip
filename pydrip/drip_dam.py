@@ -5,7 +5,9 @@ from shapely.geometry import Point
 
 
 """
-This script uses American Rivers and Dam Removal Science source datasets to unify dam characteristics
+This module combines dam information from two sources into a common dataset that manages
+dam removals for the Dam Removal Information Portal.  This module has a Dam class that allows
+for assigning of dam characteristics.
 """
 
 class Dam:
@@ -149,6 +151,15 @@ class Dam:
                         self.from_ar.append('dam_alt_name')
 
     def ar_dam_data(self, dam_data):
+        '''
+        Description
+        ------------
+        Populate dam object properties from attributes in the American Rivers Database  
+        
+        Parameters
+        ------------
+        dam_data: tuple of information about dam including attributes from the American Rivers Database
+        '''
         self.ar_id = dam_data.AR_ID
         self.latitude = dam_data.Latitude
         self.longitude = dam_data.Longitude
@@ -165,12 +176,26 @@ class Dam:
             self.dam_name = dam_data.Dam_Name
     
     def add_geometry(self):
+        '''
+        Description
+        ------------
+        Convert shapely point to wkt
+        '''
         if self.longitude is not None and self.latitude is not None:
-            self.geometry = Point(self.longitude, self.latitude)
+            self.geometry = Point(self.longitude, self.latitude).wkt
         
 
 def clean_name(name):
+    '''
+    Description
+    ------------
+    Removes alternative name, denoted in parentheses from a dam or river name
 
+    Output
+    -----------
+    main_name: str, name with (alt_name) removed
+    alt_name: list, comman separated strings representing alternative names without parentheses
+    '''
     main_name = name.split('(')[0] + name.split(')')[-1]
     main_name = main_name.replace('  ', ' ')
     main_name = main_name.strip()

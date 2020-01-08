@@ -1,9 +1,21 @@
+#Import needed packages
 import pandas as pd 
 #import geopandas as gpd
 from pydrip import drip_dam
 from pydrip import drip_sources
 
 def get_data():
+    '''
+    Description
+    ------------
+    Retrieves source data from American Rivers Dam Removal Database and USGS Dam Removal Science Database
+
+    Output
+    -----------
+    american_rivers_df: American Rivers database in pandas dataframe
+    dam_removal_science_df: USGS Dam Removal Science database in pandas dataframe
+    '''
+
     #get latest American Rivers Data
     ar_url = drip_sources.get_american_rivers_data_url()
     american_rivers_df = drip_sources.read_american_rivers(ar_url)
@@ -15,6 +27,13 @@ def get_data():
     return american_rivers_df, dam_removal_science_df 
 
 def build_drip_dams_table(dam_removal_science_df, american_rivers_df):
+    '''
+    Description
+    ------------
+    Builds table of all dam removals from both USGS and American Rivers sources.
+    This dataset represents dams shown in the Dam Removal Science Database.
+    '''
+
     #Select fields that contain dam information or american rivers id
     dam_science_df = drip_sources.get_science_subset(dam_removal_science_df, target='Dam')
 
@@ -51,6 +70,14 @@ def build_drip_dams_table(dam_removal_science_df, american_rivers_df):
 
 
 def export_science_tables(dam_removal_science_df, tables=['DamCitations','Results','Accession']):
+    '''
+    Description
+    ------------
+    takes flattened USGS Dam Removal Science Database and subsets/normalizes the data extracting
+    attributes specific to attributes of interest.  See drip_sources.get_science_subset for options
+
+    currently this function exports tables in CSV format
+    '''
     for table in tables:
         df = drip_sources.get_science_subset(dam_removal_science_df, table)
         table_name = f'{table}.csv'
@@ -59,6 +86,11 @@ def export_science_tables(dam_removal_science_df, tables=['DamCitations','Result
     
 
 def main():
+    '''
+    Description
+    ------------
+    Main components needed to retrieve and manage source data for the Dam Removal Information Portal
+    '''
     #Get american rivers and dam removal science data into dataframes
     american_rivers_df, dam_removal_science_df = get_data()
 

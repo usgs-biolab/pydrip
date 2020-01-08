@@ -26,8 +26,7 @@ def get_science_data_url(doi_meta = 'https://api.datacite.org/works/10.5066/P9IG
  
     Parameters
     -----------
-    version: Which numbered version of the USNVC source to retrieve
-    force: Set to True to force cache of ScienceBase source info regardless of pre-existence
+    doi_meta = metadata about the Dam Removal Science Database based on DOI
     """
     
     #get doi metadata
@@ -51,6 +50,17 @@ def get_science_data_url(doi_meta = 'https://api.datacite.org/works/10.5066/P9IG
 
 
 def get_american_rivers_data_url(url_public_api = 'https://api.figshare.com/v2/articles/5234068'):
+    """
+    Description
+    -----------
+    Checks for newest version of the American Rivers dam removal database.  
+    Returns download url for most recent version of database CSV.
+
+    Parameters
+    -----------
+    url_public_api: url for connecting to American Rivers database via figshare API
+    """
+
     #get figshare item information
     header = {'content-type':'application/json'}
     r=requests.get(url_public_api, header).json()
@@ -65,6 +75,12 @@ def get_american_rivers_data_url(url_public_api = 'https://api.figshare.com/v2/a
     return file_url
 
 def read_american_rivers(file_url):
+    """
+    Description
+    -----------
+    Reads in the American Rivers Dam Removal Database into pandas dataframe
+    """
+
     raw_data = requests.get(file_url).content
     df = pd.read_csv(io.StringIO(raw_data.decode('utf-8')))
     #remove unnamed columns
@@ -75,20 +91,26 @@ def read_american_rivers(file_url):
     return df
 
 def read_science_data(file_url):
+    """
+    Description
+    -----------
+    Reads in the flattened version (CSV) of the USGS Dam Removal Science Database into pandas dataframe.  
+    """
+
     df = pd.read_csv(file_url, encoding='ISO-8859-1')
     return df
 
 def get_science_subset(science_df, target='Dam'):
-    '''
+    """
     Description
     ------------
     From USGS Dam Removal Science Database return subset of the full dataframe specific to the target.
     
     Parameters
     ------------
-    df: df, returned dataframe from read_science_data.  This is the full dam removal science dataset.
+    df: pandas dataframe, returned dataframe from read_science_data.  This is the full dam removal science dataset.
     target: str, options include 'Citation', 'Dam', 'Design', 'Results', 'Accession'  
-    '''
+    """
 
     if target == 'Dam':
         #Select fields that contain dam information or american rivers id
@@ -137,6 +159,18 @@ def get_science_subset(science_df, target='Dam'):
         return design_data
 
 def get_ar_only_dams(american_rivers_df, dam_science_df):
+    """
+    Description
+    ------------
+    Finds dam removal records in American Rivers database that are not documented in the 
+    USGS Dam Removal Science Database.
+    
+    Parameters
+    ------------
+    american_rivers_df: pandas dataframe of full American Rivers Database
+    dam_science_df: pandas dataframe of full USGS Dam Removal Science Database
+    """
+
     ar_in_science = dam_science_df['AR_ID'].dropna().to_list()
     ar_only_dams = american_rivers_df[~american_rivers_df['AR_ID'].isin(ar_in_science)]
     return ar_only_dams
