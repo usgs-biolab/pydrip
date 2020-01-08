@@ -50,12 +50,23 @@ def build_drip_dams_table(dam_removal_science_df, american_rivers_df):
     return all_dam_info
 
 
+def export_science_tables(dam_removal_science_df, tables=['DamCitations','Results','Accession']):
+    for table in tables:
+        df = drip_sources.get_science_subset(dam_removal_science_df, table)
+        table_name = f'{table}.csv'
+        #export as csv
+        df.to_csv(table_name, sep=',', index=False)
+    
+
 def main():
     #Get american rivers and dam removal science data into dataframes
     american_rivers_df, dam_removal_science_df = get_data()
 
     #Build JSON Representation of Drip Dams
     drip_dams = build_drip_dams_table(dam_removal_science_df, american_rivers_df)
+
+    #Export Dam Removal Science Tables needed for DRIP
+    export_science_tables(dam_removal_science_df, tables=['DamCitations','Results','Accession'])
 
 
 if __name__ == "__main__":
