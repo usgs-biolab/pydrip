@@ -1,0 +1,4 @@
+pydrip_env/
+*.csv
+.vscode/
+pydrip/__pycache__/

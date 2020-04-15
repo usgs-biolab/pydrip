@@ -1,13 +1,19 @@
-# This file may be used to create an environment using:
-# $ conda create --name <env> --file <this file>
-# platform: linux-64
-numpy=1.17.4=py37hc1035e2_0
-numpy-base=1.17.4=py37hde5b4d6_0
-pandas=0.25.3=py37he6710b0_0
-pip=19.3.1=py37_0
-python=3.7.5=h0371630_0
-requests=2.22.0=py37_1
-sciencebasepy=1.6.6=pypi_0
-setuptools=42.0.2=py37_0
-shapely=1.6.4=py37hc5e8c75_0
-wheel=0.33.6=py37_0
+toml==0.10.0
+brotli==1.0.7
+cryptography==2.8
+Cython==0.29.16
+importlib_metadata==1.5.2
+ipaddr==2.2.0
+keyring==21.2.0
+lockfile==0.12.2
+lxml==4.5.0
+mypy_extensions==0.4.3
+numpy==1.18.2
+ordereddict==1.1
+pandas==1.0.3
+protobuf==3.11.3
+pyOpenSSL==19.1.0
+sciencebasepy==1.6.9
+Shapely==1.7.0
+wincertstore==0.2
+zipp==3.1.0
