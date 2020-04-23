@@ -6,6 +6,9 @@ import pandas as pd
 from pydrip import drip_dam
 from pydrip import drip_sources
 
+# Export Dam Removal Science Tables needed for DRIP
+tables = ["DamCitations", "Results", "Accession"]
+
 
 def get_data():
     """
@@ -69,15 +72,10 @@ def build_drip_dams_table(dam_removal_science_df, american_rivers_df):
     # dams_gdf = gpd.GeoDataFrame(df, geometry=df['geometry'])
     # dams_gdf.crs = {'init':'epsg:4326'}
 
-    # NOTE: we now need to do this in the process_1 function to conform to the
-    # pipeline architecture requirements
-    # export as csv
-    # all_spatial_dam_df.to_csv("drip_dams.csv", sep=",", index=False)
-
     return all_spatial_dam_df
 
 
-# @Matt TODO: #current find all to_csv and mark for change to process
+# NOTE: This function is not currently used, we do the exporting in main
 def export_science_tables(
     dam_removal_science_df, tables=["DamCitations", "Results", "Accession"]
 ):
@@ -92,11 +90,10 @@ def export_science_tables(
     for table in tables:
         df = drip_sources.get_science_subset(dam_removal_science_df, table)
         table_name = f"{table}.csv"
-        # @Matt TODO: #current call process_1 on each df, they should each be imported as a table
-        # export as csv
         df.to_csv(table_name, sep=",", index=False)
 
 
+# This architecture and process is based on the pipeline documentation here: https://code.chs.usgs.gov/fort/bcb/pipeline/docs
 def process_1(
     path, ch_ledger, send_final_result, send_to_stage, previous_stage_result,
 ):
@@ -106,7 +103,6 @@ def process_1(
     architecture and process is based on the pipeline documentation here:
     https://code.chs.usgs.gov/fort/bcb/pipeline/docs
     """
-    # @Matt TODO: #current setup process_1
     # Get american rivers and dam removal science data into dataframes
     american_rivers_df, dam_removal_science_df = get_data()
 
@@ -114,54 +110,57 @@ def process_1(
     all_spatial_dam_df = build_drip_dams_table(
         dam_removal_science_df, american_rivers_df
     )
-    # @Matt TODO: #current if we are in mock mode, put in csv
-    # all_spatial_dam_df.to_csv("drip_dams.csv", sep=",", index=False)
+
     record_count = 0
     for _index, dam in all_spatial_dam_df.iterrows():
-        row_id = 'all_spatial_dams_' + dam['_id']
+        dam.loc["dataset"] = "drip_dams"
+        row_id = "drip_dams_" + dam["_id"]
         data = {"row_id": row_id, "data": dam.to_json()}
         send_final_result(json.dumps(data))
         record_count += 1
 
-    # Export Dam Removal Science Tables needed for DRIP
-    export_science_tables(
-        dam_removal_science_df, tables=["DamCitations", "Results", "Accession"]
-    )
+    for table in tables:
+        df = drip_sources.get_science_subset(dam_removal_science_df, table)
+
+        for index, record in df.iterrows():
+            record.loc["dataset"] = table
+            row_id = f"{table}_{index}"
+            data = {"row_id": row_id, "data": record.to_json()}
+            send_final_result(json.dumps(data))
+            record_count += 1
 
     return record_count
 
 
-# @Matt TODO: document a mock run
-# @Matt TODO: #current this is basically our process_1, except we need to do csv_exporting here only
 def main():
     """
     Description
     ------------
     Main components needed to retrieve and manage source data for the Dam Removal Information Portal
+    This is used to run locally, all pipeline elements are mocked.
     """
 
-    collected_all_spatial_dam = []
+    collected_data = {}
 
-    # @Matt TODO: #current the format of this needs to be row_id, data I think
+    # Is in format {'row_id': <row_id>, 'data', <json_data>}
     def send_final_result(record):
         json_record = json.loads(record)
-        data = json.loads(json_record['data'])
-        data['dataset'] = 'all_spatial_dams'
-        collected_all_spatial_dam.append(data)
-        # @Matt TODO: #current add to a df
+        data = json.loads(json_record["data"])
 
-    # @Matt TODO: #current if local, apply local mock pipeline
+        dataset = data["dataset"]
+
+        if dataset not in collected_data:
+            collected_data[dataset] = []
+        collected_data[dataset].append(data)
+
     records_processed = process_1("mock", None, send_final_result, None, None)
 
-    collected_all_spatial_dam_df = pd.DataFrame(collected_all_spatial_dam)
-    collected_all_spatial_dam_df.to_csv("drip_dams.csv", sep=",", index=False)
+    # since this is a mock, let's output all the datasets as csv tables
+    for table in collected_data:
+        df = pd.DataFrame(collected_data[table])
+        df.to_csv(f"{table}.csv", sep=",", index=False)
 
-    print('Records processed for Spatial Dams: ', records_processed)
-
-    # @Matt TODO: #current csv out the df
-
-    # @Matt TODO: do we need json?
-    # @Matt TODO: this saves a csv internally, so we probably do need it
+    print("Records processed: ", records_processed)
 
 
 if __name__ == "__main__":
