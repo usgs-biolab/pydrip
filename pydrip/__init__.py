@@ -4,6 +4,7 @@ import pkg_resources
 
 from . import drip_sources
 from . import drip_dam
+from . import bis_pipeline
 
 # from . import drip_pipeline
 
