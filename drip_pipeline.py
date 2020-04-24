@@ -33,9 +33,8 @@ def main():
     # Is in format {'row_id': <row_id>, 'data', <json_data>}
     def send_final_result(record):
         json_record = json.loads(record)
-        data = json.loads(json_record["data"])
-
-        dataset = data["dataset"]
+        data = json_record['data']
+        dataset = data['dataset']
 
         if dataset not in collected_data:
             collected_data[dataset] = []

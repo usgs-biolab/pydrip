@@ -96,7 +96,7 @@ def process_1(
     for _index, dam in all_spatial_dam_df.iterrows():
         dam.loc["dataset"] = "drip_dams"
         row_id = "drip_dams_" + dam["_id"]
-        data = {"row_id": row_id, "data": dam.to_json()}
+        data = {"row_id": row_id, "data": dam.to_dict()}
         send_final_result(json.dumps(data))
         record_count += 1
 
@@ -106,7 +106,7 @@ def process_1(
         for index, record in df.iterrows():
             record.loc["dataset"] = table
             row_id = f"{table}_{index}"
-            data = {"row_id": row_id, "data": record.to_json()}
+            data = {"row_id": row_id, "data": record.to_dict()}
             send_final_result(json.dumps(data))
             record_count += 1
 
