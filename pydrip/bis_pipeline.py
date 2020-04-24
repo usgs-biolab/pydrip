@@ -7,6 +7,7 @@ from . import drip_sources
 # Export Dam Removal Science Tables needed for DRIP
 tables = ["DamCitations", "Results", "Accession"]
 
+json_schema = None
 
 def get_data():
     """
