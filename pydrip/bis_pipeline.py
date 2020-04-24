@@ -1,4 +1,3 @@
-import json
 import pandas as pd
 
 from . import drip_dam
@@ -97,7 +96,7 @@ def process_1(
         dam.loc["dataset"] = "drip_dams"
         row_id = "drip_dams_" + dam["_id"]
         data = {"row_id": row_id, "data": dam.to_dict()}
-        send_final_result(json.dumps(data))
+        send_final_result(data)
         record_count += 1
 
     for table in tables:
@@ -107,7 +106,7 @@ def process_1(
             record.loc["dataset"] = table
             row_id = f"{table}_{index}"
             data = {"row_id": row_id, "data": record.to_dict()}
-            send_final_result(json.dumps(data))
+            send_final_result(data)
             record_count += 1
 
     return record_count
