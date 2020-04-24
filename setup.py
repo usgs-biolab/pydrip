@@ -9,6 +9,6 @@ setup(
     author_email="bcb@usgs.gov",
     license="unlicense",
     packages=["pydrip"],
-    install_requires=["sciencebasepy", "re", "requests"],
+    install_requires=["sciencebasepy", "requests"],
     zip_safe=False,
 )
