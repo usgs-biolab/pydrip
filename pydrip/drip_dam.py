@@ -62,7 +62,8 @@ class Dam:
 
         else:
             print(
-                f"Unknown Source for id: {dam_id}. Only accepts 'American Rivers' and 'Dam Removal Science'"
+                f"Unknown Source for id: {dam_id}. "
+                f"Only accepts 'American Rivers' and 'Dam Removal Science'"
             )
             sys.exit()
 
@@ -75,7 +76,7 @@ class Dam:
             Information about dam from dam removal science data
 
         """
-        self.science_id = str(science_data.DamAccessionNumber)
+        self.dam_science_id = str(science_data.DamAccessionNumber)
 
         if ~np.isnan(float(science_data.DamLatitude)) and ~np.isnan(
             float(science_data.DamLongitude)

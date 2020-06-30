@@ -1,5 +1,5 @@
 import pandas as pd
-import pydrip
+from pydrip import drip_sources, bis_pipeline
 
 # NOTE: This function is not currently used, we do the exporting in main
 def export_science_tables(
@@ -14,7 +14,7 @@ def export_science_tables(
     currently this function exports tables in CSV format
     """
     for table in tables:
-        df = pydrip.drip_sources.get_science_subset(dam_removal_science_df, table)
+        df = drip_sources.get_science_subset(dam_removal_science_df, table)
         table_name = f"{table}.csv"
         df.to_csv(table_name, sep=",", index=False)
 
@@ -38,7 +38,7 @@ def main():
             collected_data[dataset] = []
         collected_data[dataset].append(data)
 
-    records_processed = pydrip.bis_pipeline.process_1("mock", None, send_final_result, None, None)
+    records_processed = bis_pipeline.process_1("mock", None, send_final_result, None, None)
 
     # since this is a mock, let's output all the datasets as csv tables
     for table in collected_data:

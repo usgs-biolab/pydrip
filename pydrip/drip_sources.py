@@ -10,6 +10,10 @@ Author
 ----------
 Name: Daniel Wieferich
 Contact: dwieferich@usgs.gov
+
+Notes
+----------
+damaccessionnumber = dam_science_id
 """
 
 # Import packages
@@ -211,19 +215,26 @@ def get_science_subset(science_df, target="Dam"):
                 | science_df.columns.str.contains("DamAccessionNumber")
             ]
         ]
+        # Remove all duplicate records
         dam_citation_data = dam_citation_data_all.drop_duplicates()
         relevant = []
         for citation in dam_citation_data.itertuples():
+            # Build citation information per dam
             dam = citation.DamAccessionNumber
             doi = f"https://doi.org/{citation.CitationDOI}"
+            if doi == "https://doi.org/nan":
+                doi = None
             if ~np.isnan(citation.CitationYear):
-                citation = f"{citation.CitationAuthor}, {str(int(citation.CitationYear))}, {citation.CitationTitle}"
+                citation = f"{citation.CitationAuthor}, "\
+                    f"{str(int(citation.CitationYear))}, "\
+                    f"{citation.CitationTitle}"
             else:
-                citation = f"{citation.CitationAuthor}, {citation.CitationTitle}"
+                citation = f"{citation.CitationAuthor}, "\
+                    f"{citation.CitationTitle}"
             relevant.append(
-                {"DamAccessionNumber": dam,
-                 "CitationDOI": doi,
-                 "Citation": citation}
+                {"dam_science_id": dam,
+                 "citation_doi": doi,
+                 "citation": citation}
             )
             relevant_dam_citation_data = pd.DataFrame(relevant)
         return relevant_dam_citation_data
@@ -239,7 +250,7 @@ def get_science_subset(science_df, target="Dam"):
 def get_ar_only_dams(american_rivers_df, dam_science_df):
     """Find dam removal record in AR database not in Science Database.
 
-    Finds dam removal records in American Rivers database that are 
+    Finds dam removal records in American Rivers database that are
     not documented in the USGS Dam Removal Science Database.
 
     Parameters
