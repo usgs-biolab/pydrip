@@ -53,6 +53,8 @@ class Dam:
         self.dam_alt_name = []
         self.stream_alt_name = []
         self.from_ar = []
+        self.science_citation_ids = []
+        self.science_result_ids = []
 
         if dam_source == "Dam Removal Science":
             self.in_drd = 1
@@ -216,6 +218,28 @@ class Dam:
         ar_dam_name, ar_alt_dam_name = clean_name(dam_data.Dam_Name)
         self.dam_name = ar_dam_name
         self.dam_alt_name = ar_alt_dam_name
+
+    def add_science_summaries(self, science_accession):
+        """Add science summaries to dam object.
+
+        Use science data accession information to add information
+        about citations and results related to the dam object.
+
+        Parameters
+        ----------
+        science_accession: df
+            Information about dam
+            including attributes from the American Rivers Database
+
+        """
+        dam_accession = science_accession[science_accession['DamAccessionNumber'] == int(self.dam_science_id)]
+        # if int(dam_accession.shape[0]) > 0:
+        # Group by Dam ID get unique set of associated citation ids
+        citations = dam_accession.groupby('DamAccessionNumber')['CitationAccessionNumber'].apply(set).reset_index(name='science_citation_ids')
+        self.science_citation_ids.extend(citations['science_citation_ids'][0])
+        # Group by Dam ID get unique set of associated result ids
+        results = dam_accession.groupby('DamAccessionNumber')['ResultsID'].apply(set).reset_index(name='science_result_ids')
+        self.science_result_ids.extend(results['science_result_ids'][0])
 
     def add_geometry(self):
         """Convert shapely point to wkt."""

@@ -44,13 +44,20 @@ def build_drip_dams_table(dam_removal_science_df, american_rivers_df):
         dam_removal_science_df, target="Dam"
     )
 
-    # For each dam in science database find best available data for the dam, first looking in science database and if null look in American Rivers
+    # Select fields that contain relationship keys in science database
+    science_accession_df = drip_sources.get_science_subset(
+        dam_removal_science_df, target="Accession"
+    )
+
+    # For each dam in science database find best available data for the dam
+    # First looking in science database and if null look in American Rivers
     all_dam_info = []
     for dam in dam_science_df.itertuples():
         removal_data = drip_dam.Dam(dam_id=dam.DamAccessionNumber)
         removal_data.science_data(dam)
         removal_data.update_missing_data(american_rivers_df)
         removal_data.add_geometry()
+        removal_data.add_science_summaries(science_accession_df)
         all_dam_info.append(removal_data.__dict__)
 
     # For each dam only in American Rivers database, get AR data
