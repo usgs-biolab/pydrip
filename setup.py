@@ -1,14 +1,17 @@
 from setuptools import setup
+from setuptools import find_packages
 
 setup(
+    author="Daniel Wieferich",
+    author_email="dwieferich@usgs.gov",
+    python_requires=">=3.6",
     name="pydrip",
     version="0.0.1",
     description="Processing codes for building DRIP data",
     url="http://github.com/usgs-bcb/pydrip",
-    author="Daniel Wieferich",
-    author_email="bcb@usgs.gov",
     license="unlicense",
-    packages=["pydrip"],
+    packages=find_packages(include=['pydrip','pydrip.*']),
+    test_suite='tests',
     install_requires=[
         "pandas==1.0.3",
         "requests==2.22.0",

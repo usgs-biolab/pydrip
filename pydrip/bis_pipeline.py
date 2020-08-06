@@ -1,3 +1,6 @@
+"""Methods to get dam removal data into bis pipeline."""
+
+# Import needed packages
 import pandas as pd
 
 from . import drip_dam
@@ -8,18 +11,21 @@ tables = ["DamCitations", "Results", "Accession"]
 
 json_schema = None
 
+
 def get_data():
-    """
-    Description
-    ------------
-    Retrieves source data from American Rivers Dam Removal Database and USGS Dam Removal Science Database
+    """Retrieve source data.
 
-    Output
-    -----------
-    american_rivers_df: American Rivers database in pandas dataframe
-    dam_removal_science_df: USGS Dam Removal Science database in pandas dataframe
-    """
+    Retrieves source data from American Rivers Dam Removal Database
+    and USGS Dam Removal Science Database.
 
+    Returns
+    ----------
+    american_rivers_df: pandas dataframe
+        American Rivers database in pandas dataframe
+    dam_removal_science_df: pandas dataframe
+        USGS Dam Removal Science database in pandas dataframe
+
+    """
     # get latest American Rivers Data
     ar_url = drip_sources.get_american_rivers_data_url()
     american_rivers_df = drip_sources.read_american_rivers(ar_url)
@@ -32,25 +38,32 @@ def get_data():
 
 
 def build_drip_dams_table(dam_removal_science_df, american_rivers_df):
-    """
-    Description
-    ------------
-    Builds table of all dam removals from both USGS and American Rivers sources.
-    This dataset represents dams shown in the Dam Removal Science Database.
-    """
+    """Build all needed tables of information.
 
+    Builds table of all dam removals from both USGS and
+    American Rivers sources. This dataset represents dams
+    shown in the Dam Removal Science Database.
+
+    """
     # Select fields that contain dam information or american rivers id
     dam_science_df = drip_sources.get_science_subset(
         dam_removal_science_df, target="Dam"
     )
 
-    # For each dam in science database find best available data for the dam, first looking in science database and if null look in American Rivers
+    # Select fields that contain relationship keys in science database
+    science_accession_df = drip_sources.get_science_subset(
+        dam_removal_science_df, target="Accession"
+    )
+
+    # For each dam in science database find best available data for the dam
+    # First looking in science database and if null look in American Rivers
     all_dam_info = []
     for dam in dam_science_df.itertuples():
         removal_data = drip_dam.Dam(dam_id=dam.DamAccessionNumber)
         removal_data.science_data(dam)
         removal_data.update_missing_data(american_rivers_df)
         removal_data.add_geometry()
+        removal_data.add_science_summaries(science_accession_df)
         all_dam_info.append(removal_data.__dict__)
 
     # For each dam only in American Rivers database, get AR data
@@ -73,15 +86,14 @@ def build_drip_dams_table(dam_removal_science_df, american_rivers_df):
     return all_spatial_dam_df
 
 
-# This architecture and process is based on the pipeline documentation here: https://code.chs.usgs.gov/fort/bcb/pipeline/docs
 def process_1(
     path, ch_ledger, send_final_result, send_to_stage, previous_stage_result,
 ):
-    """
-    Description
-    -----------
-    architecture and process is based on the pipeline documentation here:
+    """Pipeline process.
+
+    Architecture and process is based on the pipeline documentation here:
     https://code.chs.usgs.gov/fort/bcb/pipeline/docs
+
     """
     # Get american rivers and dam removal science data into dataframes
     american_rivers_df, dam_removal_science_df = get_data()
