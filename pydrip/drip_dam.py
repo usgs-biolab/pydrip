@@ -247,7 +247,9 @@ class Dam:
             geo = Point(self.longitude, self.latitude).wkt
             if geo != 'POINT (nan nan)':
                 self.geometry = geo
-
+                return True
+            else:
+                return False
 
 def clean_name(name):
     """Clean common issues in name fields.

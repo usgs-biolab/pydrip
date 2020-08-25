@@ -36,6 +36,13 @@ It is recommended that you set up a discrete Python environment for this project
 
 ...for the latest.
 
+NOTE:
+If you execute drip_pipeline.py and get an SSL certificate error when the code tries to access :
+
+..._https://api.figshare.com/v2/articles/5234068_
+
+then you need to copy the tls-ca-bundle.pem file to the directory where you keep your certificate files.
+
 
 
 ## Provisional Software Statement

@@ -62,7 +62,8 @@ def build_drip_dams_table(dam_removal_science_df, american_rivers_df):
         removal_data = drip_dam.Dam(dam_id=dam.DamAccessionNumber)
         removal_data.science_data(dam)
         removal_data.update_missing_data(american_rivers_df)
-        removal_data.add_geometry()
+        if not removal_data.add_geometry():
+            print('--> Warning: no geometry for: {}'.format(dam.AR_ID))
         removal_data.add_science_summaries(science_accession_df)
         all_dam_info.append(removal_data.__dict__)
 
@@ -72,6 +73,8 @@ def build_drip_dams_table(dam_removal_science_df, american_rivers_df):
         removal_data = drip_dam.Dam(dam_id=dam.AR_ID, dam_source="American Rivers")
         removal_data.ar_dam_data(dam)
         removal_data.add_geometry()
+        if not removal_data.add_geometry():
+            print('--> Warning: no geometry for: {}'.format(dam.AR_ID))
         all_dam_info.append(removal_data.__dict__)
 
     all_dam_df = pd.DataFrame(all_dam_info)
@@ -109,6 +112,7 @@ def process_1(
         row_id = "drip_dams_" + dam["_id"]
         data = {"row_id": row_id, "data": dam.to_dict()}
         send_final_result(data)
+        print('--> {} : {} ({},{})'.format(dam['ar_id'],dam['dam_name'],dam['latitude'],dam['longitude']))
         record_count += 1
 
     for table in tables:
