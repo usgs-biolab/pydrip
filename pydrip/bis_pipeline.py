@@ -109,7 +109,6 @@ def process_1(
         row_id = "drip_dams_" + dam["_id"]
         data = {"row_id": row_id, "data": dam.to_dict()}
         send_final_result(data)
-        print('{} : {} ({},{})'.format(dam['ar_id'],dam['dam_name'],dam['latitude'],dam['longitude']))
         record_count += 1
 
     for table in tables:
