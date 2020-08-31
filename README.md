@@ -41,7 +41,7 @@ If you execute drip_pipeline.py and get an SSL certificate error when the code t
 
 ..._https://api.figshare.com/v2/articles/5234068_
 
-then you need to copy the tls-ca-bundle.pem file to the directory where you keep your certificate files.
+then you need to get a copy of the tls-ca-bundle.pem file and add it to the directory where you keep your certificate files.
 
 
 
