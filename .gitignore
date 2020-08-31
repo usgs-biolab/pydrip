@@ -2,3 +2,5 @@ pydrip_env/
 *.csv
 .vscode/
 pydrip/__pycache__/
+.project
+.pydevproject
