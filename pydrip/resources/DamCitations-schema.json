@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://data.usgs.gov/property_registry/",
+  "type": [
+    "array",
+    "object"
+  ],
+  "title": "DRIP Dam Removal Citations",
+  "description": "Citation information associated with dam removal science publications",
+  "items": {
+    "$ref": "#/definitions/items",
+    "properties": {
+      "dam_science_id": {
+        "$id": "#dam_science_id",
+        "type": "integer",
+        "title": "Dam Identifier in USGS Dam Removal Science Database",
+        "description": "Identifier of dam used in the USGS Dam Removal Science Database, field DamAccessionNumber. Default is no value, meaning dam removal was not in the USGS Dam Removal Science Database (blank). This field is also found in drip_dams table/dataset.",
+        "examples": [
+          2
+        ]
+      },
+      "citation_doi": {
+        "$id": "#citation_doi",
+        "type": "string",
+        "title": "Digital Object Identifier of the Citation",
+        "description": "Digital Object Identifier (DOI) assigned to the manuscript citation. Uses format https://doi.org/XXX. If no DOI is available this field is blank",
+        "examples": [
+          "https://doi.org/10.1061/40927(243)359"
+        ]
+      },
+      "citation": {
+        "$id": "#citation",
+        "type": "string",
+        "title": "Short Citation",
+        "description": "Short citation associated with dam removal science publication. Citation includes authors, publication year and title",
+        "examples": [
+          "Amos, R. A., 2008, Upstream River Responses to Low Head Dam Removal"
+        ]
+      },
+      "dataset": {
+        "$id": "#dataset",
+        "type": "string",
+        "title": "dataset",
+        "description": "represents the table name to assist in querying of entire DRIP dataset within API",
+        "examples": [
+          "DamCitations"
+        ]
+      }
+    }
+  }
+}

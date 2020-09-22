@@ -1,0 +1,184 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://data.usgs.gov/property_registry/",
+  "type": [
+    "array",
+    "object"
+  ],
+  "title": "DRIP Dam Removal Dams",
+  "description": "A dataset containing information about dams known to be removed.",
+  "items": {
+    "$ref": "#/definitions/items",
+    "properties": {
+      "_id": {
+        "$id": "#_id",
+        "type": "string",
+        "title": "identifier",
+        "description": "Identifier based on source dataset",
+        "examples": [
+          "2",
+          "CT-017"
+        ]
+      },
+      "dam_source": {
+        "$id": "#dam_source",
+        "type": "string",
+        "title": "dam source",
+        "description": "Name of source that contributed the base information for the dam",
+        "examples": [
+          "Dam Removal Science",
+          "American Rivers"
+        ]
+      },
+      "ar_id": {
+        "$id": "#ar_id",
+        "type": "string",
+        "title": "American Rivers identifier",
+        "description": "Identifier used in the American Rivers dataset",
+        "examples": [
+          "CT-017"
+        ]
+      },
+      "latitude": {
+        "$id": "#latitude",
+        "type": "number",
+        "title": "latitude",
+        "description": "Latitude of dam location using the coordinate reference system of NAD83",
+        "examples": [
+          38.234
+        ]
+      },
+      "longitude": {
+        "$id": "#longitude",
+        "type": "number",
+        "title": "longitude",
+        "description": "Longitude of dam location using the coordinate reference system of NAD83",
+        "examples": [
+          -121.0266
+        ]
+      },
+      "dam_built_year": {
+        "$id": "#dam_built_year",
+        "type": "integer",
+        "title": "Dam Built Year",
+        "description": "Year the dam was built. Formatted as integar YYYY",
+        "examples": [
+          1957
+        ]
+      },
+      "dam_height_ft": {
+        "$id": "#dam_height_ft",
+        "type": "number",
+        "title": "Dam Height in Feet",
+        "description": "Height of dam, measured in feet.",
+        "examples": [
+          9.84
+        ]
+      },
+      "dam_name": {
+        "$id": "#dam_name",
+        "type": "string",
+        "title": "Dam Name",
+        "description": "Primary name of dam as assigned by source dataset",
+        "examples": [
+          "murphy creek dam"
+        ]
+      },
+      "stream_name": {
+        "$id": "#stream_name",
+        "type": "string",
+        "title": "Stream Name",
+        "description": "Primary name of stream associated with dam, as assigned by source dataset",
+        "examples": [
+          "murphy creek"
+        ]
+      },
+      "dam_alt_name": {
+        "$id": "#dam_alt_name",
+        "type": "array",
+        "title": "Alternative Names of Dam",
+        "default": [],
+        "description": "List of comma seperated alternative names of the dam as provided by source datasets",
+        "examples": [
+          [sparrowk dam', 'sparrow dam']
+        ]
+      },
+      "stream_alt_name": {
+        "$id": "#stream_alt_name",
+        "type": "array",
+        "title": "Alternative Names of Stream",
+        "default": [],
+        "description": "List of comma seperated alternative names of the stream as provided by source datasets",
+        "examples": [
+          ['st. joseph river']
+        ]
+      },
+      "from_ar": {
+        "$id": "#from_ar",
+        "type": "array",
+        "title": "Fields Contributed to by American Rivers Database",
+        "description": "List of comma seperated field names representing fields in drip_dams that were contributed to by American Rivers database",
+        "examples": [
+          ['dam_alt_name']
+        ]
+      },
+      "science_citation_ids": {
+        "$id": "#science_citation_ids",
+        "type": "array",
+        "title": "Related Science Citation Identifiers",
+        "default": [],
+        "description": "List of comma seperated identifiers (integers) of related dam removal science citations. Note additional data on citations can be found in dataset/table DamCitations using the field dam_science_id",
+        "examples": [
+          [75,13]
+        ]
+      },
+      "science_results_ids": {
+        "$id": "#science_results_ids",
+        "type": "array",
+        "title": "Related Science Results Identifiers",
+        "default": [],
+        "description": "List of comma seperated identifiers (integers) of related dam removal science results from the USGS Dam Removal Science Database. Note additional data on results can be found in dataset/table Results using the field ResultsID",
+        "examples": [
+          [25,22]
+        ]
+      },
+      "in_drd": {
+        "$id": "#in_drd",
+        "type": "integer",
+        "title": "Is in USGS Dam Removal Science Database",
+        "description": "Binary flag showing if the dam is included in the dam removal science database. 1 = dam is in USGS Dam Removal Science Database",
+        "examples": [
+          1,
+          0
+        ]
+      },
+      "dam_science_id": {
+        "$id": "#dam_science_id",
+        "type": "integer",
+        "title": "Dam Identifier in USGS Dam Removal Science Database",
+        "description": "Identifier of dam used in the USGS Dam Removal Science Database. This field is equivalant to DamAccessionNumber in the original science database. Default is no value (blank)",
+        "examples": [
+          2
+        ]
+      },
+      "geometry": {
+        "$id": "#geometry",
+        "type": "object",
+        "title": "Point Geometry",
+        "description": "Geometry of dam location represented as a Point and having coordinate reference system of NAD83, 4269",
+        "examples": [
+          POINT (-121.0266 38.234)
+        ]
+      },
+      "dataset": {
+        "$id": "#dataset",
+        "type": "string",
+        "title": "dataset",
+        "description": "represents the table name to assist in querying of entire DRIP dataset within API",
+        "examples": [
+          "drip_dams"
+        ]
+      }
+    }
+  }
+}
