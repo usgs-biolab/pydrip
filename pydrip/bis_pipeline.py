@@ -6,8 +6,16 @@ import pandas as pd
 from . import drip_dam
 from . import drip_sources
 
+from datetime import datetime
+
 # Export Dam Removal Science Tables needed for DRIP
-tables = ["DamCitations", "Results", "Accession"]
+tables = ["DamCitations",
+          "Results",
+          "Design",
+          "Dam",
+          "Accession",
+          "Citation",
+          "dam removal science"]
 
 json_schema = None
 
@@ -34,7 +42,17 @@ def get_data():
     drd_url = drip_sources.get_science_data_url()
     dam_removal_science_df = drip_sources.read_science_data(drd_url)
 
-    return american_rivers_df, dam_removal_science_df
+    # source data
+    today = datetime.today().strftime('%Y-%m-%d')
+    source_datasets = [{"source": "american rivers dam removal database",
+                        "data_download_url": ar_url,
+                        "data_accessed": today},
+                       {"source": "usgs dam removal science database",
+                        "data_download_url": drd_url,
+                        "data_accessed": today}
+                       ]
+
+    return american_rivers_df, dam_removal_science_df, source_datasets
 
 
 def build_drip_dams_table(dam_removal_science_df, american_rivers_df):
@@ -96,7 +114,7 @@ def process_1(
 
     """
     # Get american rivers and dam removal science data into dataframes
-    american_rivers_df, dam_removal_science_df = get_data()
+    american_rivers_df, dam_removal_science_df, source_datasets = get_data()
 
     # Build JSON Representation of Drip Dams
     all_spatial_dam_df = build_drip_dams_table(
@@ -105,8 +123,8 @@ def process_1(
 
     record_count = 0
     for _index, dam in all_spatial_dam_df.iterrows():
-        dam.loc["dataset"] = "drip_dams"
-        row_id = "drip_dams_" + dam["_id"]
+        dam.loc["dataset"] = "dam_removals"
+        row_id = "dam_removals_" + dam["_id"]
         data = {"row_id": row_id, "data": dam.to_dict()}
         send_final_result(data)
         record_count += 1
@@ -120,5 +138,14 @@ def process_1(
             data = {"row_id": row_id, "data": record.to_dict()}
             send_final_result(data)
             record_count += 1
+
+    df = pd.DataFrame(source_datasets)
+    table = "source_datasets"
+    for index, record in df.iterrows():
+        record.loc["dataset"] = table
+        row_id = f"{table}_{index}"
+        data = {"row_id": row_id, "data": record.to_dict()}
+        send_final_result(data)
+        record_count += 1
 
     return record_count

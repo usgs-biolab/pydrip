@@ -79,7 +79,7 @@ def get_american_rivers_data_url(
     Parameters
     ----------
     url_public_api: str
-        Url for connecting to American Rivers database via figshare APIta
+        Url for connecting to American Rivers database via figshare API
 
     Returns
     ----------
@@ -160,7 +160,8 @@ def get_science_subset(science_df, target="Dam"):
         Return dataframe from read_science_data.
         This is the full dam removal science dataset.
     target: str
-        options include 'Citation', 'Dam', 'Design', 'Results', 'Accession'
+        options include 'Citation', 'Dam', 'Design', 'Results',
+        'Accession','dam removal science'
     """
     if target == "Dam":
         # Select fields that contain dam information or american rivers id
@@ -204,7 +205,12 @@ def get_science_subset(science_df, target="Dam"):
         citation_data_all = science_df[
             science_df.columns[science_df.columns.str.contains("Citation")]
         ]
-        citation_data = citation_data_all.drop_duplicates()
+        citation_data = citation_data_all.drop_duplicates().reset_index()
+
+        citation_data['doi_url'] = np.where(citation_data['CitationDOI'].isna(),
+                                            citation_data['CitationDOI'],
+                                            "https://doi.org/" + citation_data['CitationDOI']
+                                            )
         return citation_data
 
     elif target == "DamCitations":
@@ -213,6 +219,7 @@ def get_science_subset(science_df, target="Dam"):
             science_df.columns[
                 science_df.columns.str.contains("Citation")
                 | science_df.columns.str.contains("DamAccessionNumber")
+                | science_df.columns.str.contains("Design")
             ]
         ]
         # Remove all duplicate records
@@ -245,6 +252,14 @@ def get_science_subset(science_df, target="Dam"):
         ]
         design_data = design_data_all.drop_duplicates()
         return design_data
+
+    # Return entire dam removal science database
+    elif target in ["dam removal science"]:
+        science_df['doi_url'] = np.where(science_df['CitationDOI'].isna(),
+                                    science_df['CitationDOI'],
+                                    "https://doi.org/" + science_df['CitationDOI']
+                                    )
+        return science_df
 
 
 def get_ar_only_dams(american_rivers_df, dam_science_df):

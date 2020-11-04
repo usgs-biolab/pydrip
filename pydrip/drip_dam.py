@@ -52,9 +52,10 @@ class Dam:
         self.stream_name = None
         self.dam_alt_name = []
         self.stream_alt_name = []
-        self.from_ar = []
+        self.from_american_rivers = []
         self.science_citation_ids = []
         self.science_result_ids = []
+        self.nidid = None
 
         if dam_source == "Dam Removal Science":
             self.in_drd = 1
@@ -90,7 +91,7 @@ class Dam:
         if ~np.isnan(float(science_data.DamHeight_m)):
             # convert meters to feet
             self.dam_height_ft = (
-                float(science_data.DamHeight_m) * 3.28084
+                int(float(science_data.DamHeight_m) * 3.28084)
             )
         # if removal year is not null in the science database then set value
         if ~np.isnan(science_data.DamYearRemovalFinished):
@@ -130,6 +131,11 @@ class Dam:
         if str(science_data.AR_ID) != "nan":
             self.ar_id = str(science_data.AR_ID)
 
+        # if nidid (national inventory of dams) is not null in
+        # science database then set value
+        if str(science_data.DamNIDID) != "nan":
+            self.nidid = str(science_data.DamNIDID)
+
     def update_missing_data(self, american_rivers_df):
         """Update missing data using american rivers data.
 
@@ -155,27 +161,30 @@ class Dam:
             # If lat or lon is none populate from AR data
             if self.latitude is None and ~np.isnan(ar_id_data["Latitude"][0]):
                 self.latitude = float(ar_id_data["Latitude"][0])
-                self.from_ar.append("latitude")
+                self.from_american_rivers.append("latitude")
             if self.longitude is None and ~np.isnan(ar_id_data["Longitude"][0]):
                 self.longitude = float(ar_id_data["Longitude"][0])
-                self.from_ar.append("longitude")
+                self.from_american_rivers.append("longitude")
             # Update dam build year from AR data if currently none
             if self.dam_built_year is None and ~np.isnan(ar_id_data["Year_Built"][0]):
                 self.dam_built_year = int(ar_id_data["Year_Built"][0])
-                self.from_ar.append("dam_built_year")
+                self.from_american_rivers.append("dam_built_year")
             # Update dam remove year from AR data if currently none
             if self.dam_removed_year is None and ~np.isnan(
                 ar_id_data["Year_Removed"][0]
             ):
                 self.dam_removed_year = int(ar_id_data["Year_Removed"][0])
-                self.from_ar.append("dam_removed_year")
+                self.from_american_rivers.append("dam_removed_year")
             # Update dam height from AR data if currently none
             if self.dam_height_ft is None and ~np.isnan(ar_id_data["Dam_Height_ft"][0]):
-                self.dam_height_ft = float(ar_id_data["Dam_Height_ft"][0])
-                self.from_ar.append("dam_height_ft")
+                self.dam_height_ft = int(float(ar_id_data["Dam_Height_ft"][0]))
+                self.from_american_rivers.append("dam_height_ft")
             # Update stream name from AR data if currently none
             if self.stream_name is None and ar_id_data["River"][0]:
                 self.stream_name = ar_id_data["River"][0]
+            # Update NIDID from AR data if currently none
+            if self.nidid is None and ar_id_data["NID_ID"][0]:
+                self.nidid = ar_id_data["NID_ID"][0]
             # If AR data has dam name add if new
             if ar_id_data["Dam_Name"][0]:
                 name = ar_id_data["Dam_Name"][0]
@@ -184,7 +193,7 @@ class Dam:
                 # If name is none replace with AR name
                 if self.dam_name is None:
                     self.dam_name = str(ar_dam_name)
-                    self.from_ar.append("dam_name")
+                    self.from_american_rivers.append("dam_name")
 
                 # All AR dam names
                 ar_alt_dam_name.append(ar_dam_name)
@@ -195,7 +204,7 @@ class Dam:
                 unique_list = list(set(unique))
                 if len(unique_list) > 0:
                     self.dam_alt_name.extend(unique_list)
-                    self.from_ar.append("dam_alt_name")
+                    self.from_american_rivers.append("dam_alt_name")
 
     def ar_dam_data(self, dam_data):
         """Add properties to dam from the American Rivers Database.
@@ -214,6 +223,7 @@ class Dam:
         self.dam_removed_year = dam_data.Year_Removed
         self.dam_height_ft = dam_data.Dam_Height_ft
         self.stream_name = dam_data.River
+        self.nidid = dam_data.NID_ID
 
         ar_dam_name, ar_alt_dam_name = clean_name(dam_data.Dam_Name)
         self.dam_name = ar_dam_name
@@ -249,6 +259,7 @@ class Dam:
                 self.geometry = geo
             else:
                 print(f"No geometry for id: {self.ar_id}")
+
 
 def clean_name(name):
     """Clean common issues in name fields.
