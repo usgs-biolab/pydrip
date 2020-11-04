@@ -6,7 +6,7 @@
     "object"
   ],
   "title": "DRIP Dam Removal Dams",
-  "description": "A dataset containing information about dams known to be removed.",
+  "description": "A dataset containing information about dams known to be removed coming from USGS Dam Removal Science Database and American Rivers Dam Removal Database.",
   "items": {
     "$ref": "#/definitions/items",
     "properties": {
@@ -25,7 +25,7 @@
         "type": "string",
         "title": "dam source",
         "description": "Name of source that contributed the base information for the dam",
-        "examples": [
+        "options": [
           "Dam Removal Science",
           "American Rivers"
         ]
@@ -34,7 +34,7 @@
         "$id": "#ar_id",
         "type": "string",
         "title": "American Rivers identifier",
-        "description": "Identifier used in the American Rivers dataset",
+        "description": "Identifier used in the American Rivers dataset. Not all removals will have ar_id.",
         "examples": [
           "CT-017"
         ]
@@ -43,7 +43,7 @@
         "$id": "#latitude",
         "type": "number",
         "title": "latitude",
-        "description": "Latitude of dam location using the coordinate reference system of NAD83",
+        "description": "Latitude of dam location using the coordinate reference system of NAD83, crs 4269",
         "examples": [
           38.234
         ]
@@ -52,7 +52,7 @@
         "$id": "#longitude",
         "type": "number",
         "title": "longitude",
-        "description": "Longitude of dam location using the coordinate reference system of NAD83",
+        "description": "Longitude of dam location using the coordinate reference system of NAD83, crs 4269",
         "examples": [
           -121.0266
         ]
@@ -66,13 +66,22 @@
           1957
         ]
       },
+      "dam_removed_year": {
+        "$id": "#dam_removed_year",
+        "type": "integer",
+        "title": "Dam Removed Year",
+        "description": "Year the dam was removed. Formatted as integar YYYY",
+        "examples": [
+          1957
+        ]
+      },
       "dam_height_ft": {
         "$id": "#dam_height_ft",
         "type": "number",
         "title": "Dam Height in Feet",
-        "description": "Height of dam, measured in feet.",
+        "description": "Height of dam, rounded to nearest integer in feet.",
         "examples": [
-          9.84
+          10
         ]
       },
       "dam_name": {
@@ -114,7 +123,7 @@
         ]
       },
       "from_ar": {
-        "$id": "#from_ar",
+        "$id": "#from_american_rivers",
         "type": "array",
         "title": "Fields Contributed to by American Rivers Database",
         "description": "List of comma seperated field names representing fields in drip_dams that were contributed to by American Rivers database",
@@ -133,7 +142,7 @@
         ]
       },
       "science_results_ids": {
-        "$id": "#science_results_ids",
+        "$id": "#science_result_ids",
         "type": "array",
         "title": "Related Science Results Identifiers",
         "default": [],
@@ -153,7 +162,7 @@
         ]
       },
       "dam_science_id": {
-        "$id": "#dam_science_id",
+        "$id": "#science_dam_id",
         "type": "integer",
         "title": "Dam Identifier in USGS Dam Removal Science Database",
         "description": "Identifier of dam used in the USGS Dam Removal Science Database. This field is equivalant to DamAccessionNumber in the original science database. Default is no value (blank)",
@@ -165,7 +174,7 @@
         "$id": "#geometry",
         "type": "object",
         "title": "Point Geometry",
-        "description": "Geometry of dam location represented as a Point and having coordinate reference system of NAD83, 4269",
+        "description": "Geometry of dam location represented as a Point and having coordinate reference system of NAD83, CRS 4269",
         "examples": [
           POINT (-121.0266 38.234)
         ]
