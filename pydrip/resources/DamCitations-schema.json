@@ -11,10 +11,10 @@
     "$ref": "#/definitions/items",
     "properties": {
       "dam_science_id": {
-        "$id": "#dam_science_id",
+        "$id": "#science_dam_id",
         "type": "integer",
         "title": "Dam Identifier in USGS Dam Removal Science Database",
-        "description": "Identifier of dam used in the USGS Dam Removal Science Database, field DamAccessionNumber. Default is no value, meaning dam removal was not in the USGS Dam Removal Science Database (blank). This field is also found in drip_dams table/dataset.",
+        "description": "Identifier of dam used in the USGS Dam Removal Science Database, field DamAccessionNumber.  The same id can have multiple records. Default is no value, meaning dam removal was not in the USGS Dam Removal Science Database (blank). This field is also found in dam_removals table/dataset.",
         "examples": [
           2
         ]

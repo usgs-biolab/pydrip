@@ -19,40 +19,58 @@
           558
         ]
       },
-      "DamAccessionNumber": {
-        "$id": "#DamAccessionNumber",
+      "science_dam_id": {
+        "$id": "#science_dam_id",
         "type": "integer",
-        "title": "Dam Accession Number",
-        "description": "a unique number assigned to each dam in database. There are some gaps due to dams and citations being removed from analysis due to being out of the study scope",
+        "title": "Dam Identifier in Science Database",
+        "description": "A unique number assigned to each dam in database. In original database this is called DamAccessionNumber. There are some gaps due to dams and citations being removed from analysis due to being out of the study scope",
         "examples": [
           156
         ]
       },
-      "CitationAccessionNumber": {
-        "$id": "#CitationAccessionNumber",
+      "science_citation_id": {
+        "$id": "#science_citation_id",
         "type": "integer",
-        "title": "Citation Accession Number",
-        "description": "A unique number assigned to each Citation record in the database.  There are some gaps due to dams and citations being removed from analysis due to being out of the study scope",
+        "title": "Citation Identifier in Science Database",
+        "description": "A unique number assigned to each Citation record in the database. In original database this is called CitationAccessionNumber.  There are some gaps due to dams and citations being removed from analysis due to being out of the study scope",
         "examples": [
           156
         ]
       },
-      "ResultsID": {
-        "$id": "#ResultsID",
+      "science_results_id": {
+        "$id": "#science_results_id",
         "type": "integer",
-        "title": "Results Identifier",
-        "description": "Sequential automatically generated number assigned to each Results record in the database. There are some gaps due to dams and citations being removed from analysis due to being out of the study scope",
+        "title": "Results Identifier in Science Database",
+        "description": "Sequential automatically generated number assigned to each Results record in the database. In original database this is called ResultsID. There are some gaps due to dams and citations being removed from analysis due to being out of the study scope",
         "examples": [
           156
         ]
       },
-      "DesignID": {
-        "$id": "#DesignID",
+      "science_design_id": {
+        "$id": "#science_design_id",
         "type": "integer",
-        "title": "Design Identifier",
-        "description": "Sequential automatically generated number assigned to each Design record in the database. There are some gaps due to dams and citations being removed from analysis due to being out of the study scope",
+        "title": "Design Identifier in Science Database",
+        "description": "Sequential automatically generated number assigned to each Design record in the database. In original database this is called DesignID. There are some gaps due to dams and citations being removed from analysis due to being out of the study scope",
         "examples": [
           156
+        ]
+      },
+      "doi_url": {
+        "$id": "#doi_url",
+        "type": "string",
+        "title": "Digital Object Identifier URL of the Citation",
+        "description": "Digital Object Identifier (DOI) assigned to the manuscript citation. Uses format https://doi.org/XXX. If no DOI is available this field is blank",
+        "examples": [
+          "https://doi.org/10.1061/40927(243)359"
+        ]
+      },
+      "citation_short": {
+        "$id": "#citation_short",
+        "type": "string",
+        "title": "Short Form of Citation",
+        "description": "Short citation associated with dam removal science publication. Citation includes authors, publication year and title",
+        "examples": [
+          "Amos, R. A., 2008, Upstream River Responses to Low Head Dam Removal"
         ]
       },
       "CitationID": {
