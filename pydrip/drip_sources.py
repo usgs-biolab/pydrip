@@ -145,6 +145,15 @@ def read_science_data(file_url):
         Pandas dataframe with Dam Removal Science Database
     """
     df = pd.read_csv(file_url, encoding="ISO-8859-1")
+
+    # rename accession fields
+    rename = {"CitationAccessionNumber": "science_citation_id",
+              "DamAccessionNumber": "science_dam_id",
+              "DesignID": "science_design_id",
+              "ResultsID": "science_results_id"}
+
+    df = df.rename(columns=rename)
+
     return df
 
 
@@ -167,8 +176,9 @@ def get_science_subset(science_df, target="Dam"):
         # Select fields that contain dam information or american rivers id
         dam_data_all = science_df[
             science_df.columns[
-                science_df.columns.str.contains("Dam")
-                | science_df.columns.str.contains("AR_ID")
+                science_df.columns.str.match("science_dam_id")
+                | science_df.columns.str.contains("Dam")
+                | science_df.columns.str.match("AR_ID")
             ]
         ]
         dam_data_all = dam_data_all.drop(
@@ -182,8 +192,7 @@ def get_science_subset(science_df, target="Dam"):
         accession_data_all = science_df[
             science_df.columns[
                 science_df.columns.str.contains("Accession")
-                | science_df.columns.str.contains("ResultsID")
-                | science_df.columns.str.contains("DesignID")
+                | science_df.columns.str.contains("science_")
             ]
         ]
         accession_data = accession_data_all.drop_duplicates()
@@ -193,8 +202,9 @@ def get_science_subset(science_df, target="Dam"):
         # Select fields that contain accession keys
         results_data_all = science_df[
             science_df.columns[
-                science_df.columns.str.contains("Results")
-                | science_df.columns.str.contains("CitationAccessionNumber")
+                science_df.columns.str.match("science_results_id")
+                | science_df.columns.str.contains("Results")
+                | science_df.columns.str.match("science_citation_id")
             ]
         ]
         results_data = results_data_all.drop_duplicates()
@@ -203,14 +213,25 @@ def get_science_subset(science_df, target="Dam"):
     elif target == "Citation":
         # need to include damaccessionnumber so we can create citations per dam
         citation_data_all = science_df[
-            science_df.columns[science_df.columns.str.contains("Citation")]
+            science_df.columns[
+                science_df.columns.str.contains("Citation")
+                | science_df.columns.str.match("science_citation_id")
+            ]
         ]
         citation_data = citation_data_all.drop_duplicates().reset_index()
 
-        citation_data['doi_url'] = np.where(citation_data['CitationDOI'].isna(),
-                                            citation_data['CitationDOI'],
-                                            "https://doi.org/" + citation_data['CitationDOI']
-                                            )
+        citation_data['doi_url'] = np.where(
+            citation_data['CitationDOI'].isna(),
+            citation_data['CitationDOI'],
+            "https://doi.org/" + citation_data['CitationDOI']
+        )
+
+        citation_data['citation_short'] = np.where(
+            citation_data['CitationYear'].notna(),
+            citation_data['CitationAuthor'] + ', ' + citation_data['CitationTitle'],
+            citation_data['CitationAuthor'] + ', ' + citation_data['CitationYear'].astype(str) + ', ' + citation_data['CitationTitle']
+        )
+
         return citation_data
 
     elif target == "DamCitations":
@@ -218,8 +239,7 @@ def get_science_subset(science_df, target="Dam"):
         dam_citation_data_all = science_df[
             science_df.columns[
                 science_df.columns.str.contains("Citation")
-                | science_df.columns.str.contains("DamAccessionNumber")
-                | science_df.columns.str.contains("Design")
+                | science_df.columns.str.match("science_dam_id")
             ]
         ]
         # Remove all duplicate records
@@ -227,7 +247,7 @@ def get_science_subset(science_df, target="Dam"):
         relevant = []
         for citation in dam_citation_data.itertuples():
             # Build citation information per dam
-            dam = citation.DamAccessionNumber
+            dam = citation.science_dam_id
             doi = f"https://doi.org/{citation.CitationDOI}"
             if doi == "https://doi.org/nan":
                 doi = None
@@ -248,17 +268,28 @@ def get_science_subset(science_df, target="Dam"):
 
     elif target in ["Design"]:
         design_data_all = science_df[
-            science_df.columns[science_df.columns.str.contains(target)]
+            science_df.columns[
+                science_df.columns.str.contains("Design")
+                | science_df.columns.str.match("science_design_id")
+            ]
         ]
         design_data = design_data_all.drop_duplicates()
         return design_data
 
     # Return entire dam removal science database
     elif target in ["dam removal science"]:
-        science_df['doi_url'] = np.where(science_df['CitationDOI'].isna(),
-                                    science_df['CitationDOI'],
-                                    "https://doi.org/" + science_df['CitationDOI']
-                                    )
+        science_df['doi_url'] = np.where(
+            science_df['CitationDOI'].isna(),
+            science_df['CitationDOI'],
+            "https://doi.org/" + science_df['CitationDOI']
+        )
+
+        # Creates short citation
+        science_df['citation_short'] = np.where(
+            science_df['CitationYear'].notna(),
+            science_df['CitationAuthor'] + ', ' + science_df['CitationTitle'],
+            science_df['CitationAuthor'] + ', ' + science_df['CitationYear'].astype(str) + ', ' + science_df['CitationTitle']
+        )
         return science_df
 
 
@@ -274,5 +305,7 @@ def get_ar_only_dams(american_rivers_df, dam_science_df):
     dam_science_df: pandas dataframe of full USGS Dam Removal Science Database
     """
     ar_in_science = dam_science_df["AR_ID"].dropna().to_list()
-    ar_only_dams = american_rivers_df[~american_rivers_df["AR_ID"].isin(ar_in_science)]
+    ar_only_dams = american_rivers_df[
+        ~american_rivers_df["AR_ID"].isin(ar_in_science)
+    ]
     return ar_only_dams

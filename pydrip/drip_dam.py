@@ -79,7 +79,7 @@ class Dam:
             Information about dam from dam removal science data
 
         """
-        self.dam_science_id = str(science_data.DamAccessionNumber)
+        self.science_dam_id = str(science_data.science_dam_id)
 
         if ~np.isnan(float(science_data.DamLatitude)) and ~np.isnan(
             float(science_data.DamLongitude)
@@ -242,13 +242,13 @@ class Dam:
             including attributes from the American Rivers Database
 
         """
-        dam_accession = science_accession[science_accession['DamAccessionNumber'] == int(self.dam_science_id)]
+        dam_accession = science_accession[science_accession['science_dam_id'] == int(self.science_dam_id)]
         # if int(dam_accession.shape[0]) > 0:
         # Group by Dam ID get unique set of associated citation ids
-        citations = dam_accession.groupby('DamAccessionNumber')['CitationAccessionNumber'].apply(set).reset_index(name='science_citation_ids')
+        citations = dam_accession.groupby('science_dam_id')['science_citation_id'].apply(set).reset_index(name='science_citation_ids')
         self.science_citation_ids.extend(citations['science_citation_ids'][0])
         # Group by Dam ID get unique set of associated result ids
-        results = dam_accession.groupby('DamAccessionNumber')['ResultsID'].apply(set).reset_index(name='science_result_ids')
+        results = dam_accession.groupby('science_dam_id')['science_results_id'].apply(set).reset_index(name='science_result_ids')
         self.science_result_ids.extend(results['science_result_ids'][0])
 
     def add_geometry(self):

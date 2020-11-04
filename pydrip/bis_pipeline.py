@@ -77,7 +77,7 @@ def build_drip_dams_table(dam_removal_science_df, american_rivers_df):
     # First looking in science database and if null look in American Rivers
     all_dam_info = []
     for dam in dam_science_df.itertuples():
-        removal_data = drip_dam.Dam(dam_id=dam.DamAccessionNumber)
+        removal_data = drip_dam.Dam(dam_id=dam.science_dam_id)
         removal_data.science_data(dam)
         removal_data.update_missing_data(american_rivers_df)
         removal_data.add_geometry()

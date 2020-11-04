@@ -23,7 +23,8 @@ def main():
     """
     Description
     ------------
-    Main components needed to retrieve and manage source data for the Dam Removal Information Portal
+    Main components needed to retrieve and manage source data for the 
+    Dam Removal Information Portal.
     This is used to run locally, all pipeline elements are mocked.
     """
 
