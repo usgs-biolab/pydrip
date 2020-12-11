@@ -21,20 +21,13 @@ drip_pipeline.py : The drip_pipeline module documents the overall pipeline that 
 ## Dependencies
 
 
-The package uses some basic Python tools in Python 3.x and above along with the following specific dependencies:
+The package uses some basic Python tools in Python 3.x and above along with the specific requirements found in requirements.txt.
 
 
-
-
-It is recommended that you set up a discrete Python environment for this project using your tool of choice. The install_requires section of the setup.py should create your dependencies for you on install. You can install from source with a local clone or directly from the source repo with...
+It is recommended that you set up a discrete Python environment for this project using your tool of choice.  You can install from source with a local clone or directly from the source repo with...
 
 ``pip install git+git://github.com/usgs-biolab/pydrip.git@main``
 
-...or...
-
-``pip install git+git://github.com/usgs-biolab/pydrip.git@develop``
-
-...for the latest.
 
 
 

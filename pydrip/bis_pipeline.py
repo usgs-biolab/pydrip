@@ -87,7 +87,9 @@ def build_drip_dams_table(dam_removal_science_df, american_rivers_df):
     # For each dam only in American Rivers database, get AR data
     ar_only_dams = drip_sources.get_ar_only_dams(american_rivers_df, dam_science_df)
     for dam in ar_only_dams.itertuples():
-        removal_data = drip_dam.Dam(dam_id=dam.AR_ID, dam_source="American Rivers")
+        removal_data = drip_dam.Dam(
+            dam_id=dam.AR_ID, dam_source="American Rivers"
+        )
         removal_data.ar_dam_data(dam)
         removal_data.add_geometry()
         all_dam_info.append(removal_data.__dict__)

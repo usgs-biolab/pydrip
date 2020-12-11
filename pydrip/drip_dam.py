@@ -181,7 +181,7 @@ class Dam:
                 self.from_american_rivers.append("dam_height_ft")
             # Update stream name from AR data if currently none
             if self.stream_name is None and ar_id_data["River"][0]:
-                self.stream_name = ar_id_data["River"][0]
+                self.stream_name = (ar_id_data["River"][0]).lower()
             # Update NIDID from AR data if currently none
             if self.nidid is None and ar_id_data["NID_ID"][0]:
                 self.nidid = ar_id_data["NID_ID"][0]
@@ -192,7 +192,7 @@ class Dam:
 
                 # If name is none replace with AR name
                 if self.dam_name is None:
-                    self.dam_name = str(ar_dam_name)
+                    self.dam_name = (str(ar_dam_name)).lower()
                     self.from_american_rivers.append("dam_name")
 
                 # All AR dam names
@@ -222,7 +222,7 @@ class Dam:
         self.dam_built_year = dam_data.Year_Built
         self.dam_removed_year = dam_data.Year_Removed
         self.dam_height_ft = dam_data.Dam_Height_ft
-        self.stream_name = dam_data.River
+        self.stream_name = str((dam_data.River)).lower()
         self.nidid = dam_data.NID_ID
 
         ar_dam_name, ar_alt_dam_name = clean_name(dam_data.Dam_Name)
@@ -286,6 +286,7 @@ def clean_name(name):
     # Separate alternative dam names from main dam name in
     # American Rivers Dam Name field
     # Also deal with a few cases where / was used instead of ()
+    name = name.lower()
     name = name.replace("/ Anadromous Fish Habitat Restoration", "")
     name = name.replace("/Arnold", "(Arnold)")
     name = name.replace("/Horseshoe Pond Dam", "(Horseshoe Pond Dam)")
