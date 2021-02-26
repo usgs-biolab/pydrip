@@ -9,13 +9,15 @@ from . import drip_sources
 from datetime import datetime
 
 # Export Dam Removal Science Tables needed for DRIP
-tables = ["DamCitations",
-          "Results",
-          "Design",
-          "Dam",
-          "Accession",
-          "Citation",
-          "dam removal science"]
+tables = [
+    {'source_name': 'DamCitations', 'out_name': 'science_dam_citations'},
+    {'source_name': 'Results', 'out_name': 'science_results'},
+    {'source_name': 'Design', 'out_name': 'science_designs'},
+    {'source_name': 'Dam', 'out_name': 'science_dams'},
+    {'source_name': 'Accession', 'out_name': 'science_accession'},
+    {'source_name': 'Citation', 'out_name': 'science_citations'},
+    {'source_name': 'dam removal science', 'out_name': 'science_all'}
+]
 
 json_schema = None
 
@@ -125,18 +127,20 @@ def process_1(
 
     record_count = 0
     for _index, dam in all_spatial_dam_df.iterrows():
-        dam.loc["dataset"] = "dam_removals"
-        row_id = "dam_removals_" + dam["_id"]
+        dam.loc["dataset"] = "drip_dams"
+        row_id = "drip_dams_" + dam["_id"]
         data = {"row_id": row_id, "data": dam.to_dict()}
         send_final_result(data)
         record_count += 1
 
-    for table in tables:
+    for t in tables:
+        table = t['source_name']
+        table_out = t['out_name']
         df = drip_sources.get_science_subset(dam_removal_science_df, table)
 
         for index, record in df.iterrows():
-            record.loc["dataset"] = table
-            row_id = f"{table}_{index}"
+            record.loc["dataset"] = table_out
+            row_id = f"{table_out}_{index}"
             data = {"row_id": row_id, "data": record.to_dict()}
             send_final_result(data)
             record_count += 1
