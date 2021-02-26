@@ -56,6 +56,8 @@ class Dam:
         self.science_citation_ids = []
         self.science_result_ids = []
         self.nidid = None
+        self.dam_material_type = None
+        self.dam_original_use = None
 
         if dam_source == "Dam Removal Science":
             self.in_drd = 1
@@ -136,6 +138,11 @@ class Dam:
         if str(science_data.DamNIDID) != "nan":
             self.nidid = str(science_data.DamNIDID)
 
+        # if damfunction is not null in
+        # science database then set value
+        if str(science_data.DamFunction) != "nan":
+            self.dam_original_use = str(science_data.DamFunction).lower()
+
     def update_missing_data(self, american_rivers_df):
         """Update missing data using american rivers data.
 
@@ -185,6 +192,12 @@ class Dam:
             # Update NIDID from AR data if currently none
             if self.nidid is None and ar_id_data["NID_ID"][0]:
                 self.nidid = ar_id_data["NID_ID"][0]
+            # Update dam_original_use from AR data if currently none
+            if self.dam_original_use is None and ar_id_data["orig_use"][0] and str(ar_id_data["orig_use"][0]) != "nan":
+                self.dam_original_use = str(ar_id_data["orig_use"][0]).lower()
+            # Update dam_material_type from AR data if currently none
+            if self.dam_material_type is None and ar_id_data["Type_Material"][0] and str(ar_id_data["Type_Material"][0]) != "nan":
+                self.dam_material_type = str(ar_id_data["Type_Material"][0]).lower()
             # If AR data has dam name add if new
             if ar_id_data["Dam_Name"][0]:
                 name = ar_id_data["Dam_Name"][0]
@@ -228,6 +241,8 @@ class Dam:
         ar_dam_name, ar_alt_dam_name = clean_name(dam_data.Dam_Name)
         self.dam_name = ar_dam_name
         self.dam_alt_name = ar_alt_dam_name
+        self.dam_original_use = str(dam_data.orig_use).lower()
+        self.dam_material_type = str(dam_data.Type_Material).lower()
 
     def add_science_summaries(self, science_accession):
         """Add science summaries to dam object.
@@ -287,9 +302,24 @@ def clean_name(name):
     # American Rivers Dam Name field
     # Also deal with a few cases where / was used instead of ()
     name = name.lower()
-    name = name.replace("/ Anadromous Fish Habitat Restoration", "")
-    name = name.replace("/Arnold", "(Arnold)")
-    name = name.replace("/Horseshoe Pond Dam", "(Horseshoe Pond Dam)")
+    name = name.replace("/ anadromous fish habitat restoration", "")
+    name = name.replace("/arnold", "(arnold)")
+    name = name.replace("/horseshoe pond dam", "(horseshoe pond dam)")
+    name = name.replace("/johnson dam", "(johnson dam)")
+    name = name.replace("kunia empty reservoir, 500", "kunia empty reservoir")
+    name = name.replace("/burning star 5/20 dam", "(Burning Start;20 Dam)")
+    name = name.replace("\dragon lake wetland)", ";dragon lake wetland)")
+    name = name.replace("/rock river dam", "(rock river dam)")
+    name = name.replace("/horseshoe pond dam)", "(horseshoe pond dam)")
+
+    #streams noted but not currently cleaning stream names
+    # name = name.replace("/rippowam (name changes at the dam)", "(rippowam)")
+    # name = name.replace("/napa river", "(napa river)")
+    # name = name.replace("/altamaha", "(altamaha)")
+    # name = name.replace("/lake superior", "(lake superior)")
+    # name = name.replace("/upper mississippi", "(upper mississippi)")
+    # name = name.replace("/ connecticut", "(connecticut)")
+    # name = name.replace("/furnace brook", "(furnace brook)")
 
     if (
         "(" in name and ")" in name
