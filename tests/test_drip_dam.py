@@ -8,15 +8,15 @@ test_dam = drip_dam.Dam(dam_id=1)
 def test_clean_name():
     """Test a few common name issues."""
     test_data = [{'in_name': 'Upper Dam (Lost Man Dam)',
-                  'out_name': 'Upper Dam',
-                  'out_list': ['Lost Man Dam']
+                  'out_name': 'upper dam',
+                  'out_list': ['lost man dam']
                   },
                  {'in_name': 'Russell (Hinkley) Dam',
-                  'out_name': 'Russell Dam',
-                  'out_list': ['Hinkley']
+                  'out_name': 'russell dam',
+                  'out_list': ['hinkley']
                   },
                  {'in_name': 'Glenbrook/ Anadromous Fish Habitat Restoration',
-                  'out_name': 'Glenbrook',
+                  'out_name': 'glenbrook',
                   'out_list': []
                   }]
     for t in test_data:
