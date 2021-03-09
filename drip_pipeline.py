@@ -1,33 +1,16 @@
 import pandas as pd
-from pydrip import drip_sources, bis_pipeline
-
-# NOTE: This function is not currently used, we do the exporting in main
-def export_science_tables(
-    dam_removal_science_df, tables=["DamCitations", "Results", "Accession"]
-):
-    """
-    Description
-    ------------
-    takes flattened USGS Dam Removal Science Database and subsets/normalizes the data extracting
-    attributes specific to attributes of interest.  See drip_sources.get_science_subset for options
-
-    currently this function exports tables in CSV format
-    """
-    for table in tables:
-        df = drip_sources.get_science_subset(dam_removal_science_df, table)
-        table_name = f"{table}.csv"
-        df.to_csv(table_name, sep=",", index=False)
+from pydrip import bis_pipeline
 
 
 def main():
-    """
+    """Retrieve and manage source data for DRIP API.
+
     Description
     ------------
-    Main components needed to retrieve and manage source data for the 
+    Main components needed to retrieve and manage source data for the
     Dam Removal Information Portal.
     This is used to run locally, all pipeline elements are mocked.
     """
-
     collected_data = {}
 
     # Is in format {'row_id': <row_id>, 'data', <json_data>}

@@ -118,9 +118,10 @@ def read_american_rivers(file_url):
 
     """
     raw_data = requests.get(file_url).content
-    df = pd.read_csv(io.StringIO(raw_data.decode("utf-8")))
+    df = pd.read_csv(io.StringIO(raw_data.decode("iso-8859-1")))
     # remove unnamed columns
     df = df[df.columns[~df.columns.str.contains("Unnamed:")]]
+    df = df.rename(columns={"Original Use":"orig_use"})
     df["Year_Removed"] = pd.to_numeric(df["Year_Removed"], errors="coerce")
     df["Year_Built"] = pd.to_numeric(df["Year_Built"], errors="coerce")
     df["Dam_Height_ft"] = pd.to_numeric(df["Dam_Height_ft"], errors="coerce")
