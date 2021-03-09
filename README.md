@@ -1,12 +1,12 @@
 # pydrip
 
 
-The Dam Removal Information Portal (DRIP) is a location where partners, scientists, and practitioners can find scientific studies associated with dam removal projects. The database is intended to be regularly updated, at least annually, so that it represents the most up to date information about the scientific studies associated with dam removal. This package helps to manage the data for DIRP.
+The Dam Removal Information Portal (DRIP) is a location where partners, scientists, and practitioners can find scientific studies associated with dam removal projects. The database is intended to be regularly updated, at least annually, so that it represents the most up to date information about the scientific studies associated with dam removal. This package helps to manage the data for DRIP and the associated DRIP API.
 
 ## Description
 
 
-This package handles retrieval and preperation of the source data for DRIP.  Source data come from two sources.  The Dam Removal Science Database is distributed by USGS in ScienceBase (https://doi.org/10.5066/P9IGEC9G) and a complete list of dam removals is distributed by American Rivers in Figshare. We provide these efforts as a package in order to support full transparency on what we are doing with the data, to allow us to more easily update DRIP and to serve as a building block for anyone else that may want to do something similar.
+This package handles retrieval and preperation of the source data for DRIP.  Source data currently come from two sources.  The Dam Removal Science Database is distributed by USGS in ScienceBase (https://doi.org/10.5066/P9IGEC9G) and a complete list of dam removals is distributed by American Rivers in Figshare (https://doi.org/10.6084/m9.figshare.5234068). We provide these efforts as a package in order to support full transparency on what we are doing with the data, to allow us to more easily update DRIP and to serve as a building block for anyone else that may want to do something similar.
 
 ### Modules
 
